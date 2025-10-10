@@ -26,7 +26,6 @@ class Category extends Model
         'slug' => 'required|string|min:3|max:255|unique:categories,slug',
         'parent_id' => 'nullable|exists:categories,id',
         'status' => 'nullable|in:1,0',
-        'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
         'meta_title' => 'required|string|min:3|max:150',
         'meta_description' => 'required|string|min:3|max:255',
         'meta_keywords' => 'required|string|min:3|max:500',

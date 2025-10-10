@@ -25,7 +25,6 @@ class Service extends Model
         'description'=>'required|string|min:2|max:65535',
         'status'=>'required|boolean',
         'link'=>'nullable|url',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5200',
     ];
 
     /*

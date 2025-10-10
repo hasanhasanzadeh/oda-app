@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\City;
 
-use App\Http\Resources\Province\ProvinceResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

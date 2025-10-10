@@ -48,12 +48,22 @@
                             @endif
                         </div>
 
-                        <!-- Image Thumbnails (if you have multiple images) -->
                         <div class="flex gap-3 justify-center">
                             <div class="w-20 h-20 rounded-lg overflow-hidden border-2 border-blue-500 cursor-pointer hover:scale-105 transition-transform">
                                 <img src="{{ $product->photo->address?? asset('images/default-image.png') }}" alt="thumb" class="w-full h-full object-cover">
                             </div>
                         </div>
+                        @if(isset($product->gallery))
+                            <div>
+                                <div class="w-20 h-20 rounded-md overflow-hidden border-2 border-blue-500 cursor-pointer hover:scale-105 transition-transform">
+                                    @foreach($product->gallery as $photo)
+                                        <img src="{{ $photo->address?? asset('images/default-image.png') }}" alt="thumb" class="w-full h-full object-cover">
+                                    @endforeach
+                                </div>
+                                <span>{{$product->gallery()->count()}}</span>
+                            </div>
+                        @endif
+
                     </div>
 
                     <!-- Product Info Section -->
@@ -68,7 +78,11 @@
                                 شناسه: <span class="font-mono bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">{{ $product->sku }}</span>
                             </p>
                         </div>
-
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                {{ $product->name_en }}
+                            </h2>
+                        </div>
                         <!-- Category Badge -->
                         <div class="flex items-center gap-2">
                             <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
@@ -102,13 +116,19 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- Sale Price -->
                                 <div class="text-center">
-                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">قیمت فروش</p>
-                                    <p class="text-3xl font-bold text-green-600 dark:text-green-400 flex items-center justify-center gap-2">
-                                        {{ number_format($product->price) }}
-                                        <span class="text-lg">تومان</span>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">قیمت اصلی</p>
+                                    <p class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center justify-center gap-2">
+                                        {{ number_format($product->original_price) }}
+                                        <span class="text-sm">تومان</span>
                                     </p>
                                 </div>
-
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">تخفیف</p>
+                                    <p class="text-2xl font-bold text-blue-600 dark:text-blue-400 flex items-center justify-center gap-2">
+                                        {{ $product->discount }}
+                                        <span class="text-sm">درصد</span>
+                                    </p>
+                                </div>
                                 <!-- Buy Price -->
                                 <div class="text-center">
                                     <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">قیمت خرید</p>
@@ -117,6 +137,14 @@
                                         <span class="text-sm">تومان</span>
                                     </p>
                                 </div>
+                                <div class="text-center">
+                                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">قیمت فروش</p>
+                                    <p class="text-3xl font-bold text-green-600 dark:text-green-400 flex items-center justify-center gap-2">
+                                        {{ number_format($product->price) }}
+                                        <span class="text-lg">تومان</span>
+                                    </p>
+                                </div>
+
                             </div>
                         </div>
 

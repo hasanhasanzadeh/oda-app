@@ -25,8 +25,9 @@ class SymbolUpdateRequest extends FormRequest
     public function rules(): array
     {
         return Symbol::rules([
+            'previous_url'=>'nullable|string',
             'title' => 'required|string|max:256|unique:symbols,title,' . $this->id,
-            'image' => 'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

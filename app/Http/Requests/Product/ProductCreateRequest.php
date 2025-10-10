@@ -25,6 +25,11 @@ class ProductCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return  Product::rules();
+        return  Product::rules([
+            'previous_url'=>'nullable|string',
+            'image'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'gallery'=>'nullable|array',
+            'gallery.*'=>'image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

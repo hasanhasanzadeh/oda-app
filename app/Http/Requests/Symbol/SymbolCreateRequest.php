@@ -24,6 +24,9 @@ class SymbolCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Symbol::rules();
+        return Symbol::rules([
+            'previous_url'=>'nullable|string',
+            'image'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

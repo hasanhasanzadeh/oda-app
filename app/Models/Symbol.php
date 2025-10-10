@@ -26,7 +26,6 @@ class Symbol extends Model
         'description'=>'required|string|min:2|max:65535',
         'link'=>'required|url|max:255',
         'status'=>'required|boolean',
-        'image'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
         'setting_id'=>'required|exists:settings,id',
     ];
 

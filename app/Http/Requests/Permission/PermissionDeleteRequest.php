@@ -23,7 +23,7 @@ class PermissionDeleteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'previous_url'=>'nullable|string',
         ];
     }
 }

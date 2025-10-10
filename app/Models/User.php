@@ -67,7 +67,6 @@ class User extends Authenticatable
         'password' => 'nullable|string|min:4|max:32',
         'role_type' => 'required|in:admin,student,teacher,staff',
         'birthday' => 'nullable|date_format:Y-m-d',
-        'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5024',
         'is_active'=>'nullable|in:0,1',
         'mobile' => 'required|ir_mobile:zero|string',
     ];

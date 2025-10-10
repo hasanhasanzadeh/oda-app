@@ -20,15 +20,25 @@ class Content extends Model
     ];
     protected static $rules = [
         'title'=>'required|string|min:2|max:70',
-        'type'=>'required|string|in:contact-us,about-us,rules|unique:contents,type',
+        'type'=>'required|string|in:contact-us,about-us,rules,privacy|unique:contents,type',
         'description'=>'required|min:3|string',
         'status'=>'required|boolean',
-        'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:2048',
         'meta_title'=>'required|string|min:3|max:150',
         'meta_description'=>'required|string|min:3|max:500',
         'meta_keywords'=>'required|string|min:3|max:1500',
     ];
 
+
+    public function getTypeLabelAttribute(): string
+    {
+        return match ($this->type) {
+            'contact-us' => 'ارتباط با ما',
+            'about-us' => 'درباره ما',
+            'rules' => 'قوانین و مقررات',
+            'privacy' => 'حریم خصوصی',
+            default => 'Unknown',
+        };
+    }
     /*
      * ---------------------------
      *          Relations

@@ -30,10 +30,9 @@
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
                     <div class="space-y-2">
-                        <label for="title" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                            {{ __('message.title') }} <span class="text-red-500">*</span>
+                        <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            {{ __('message.name') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="text" id="name" name="name" value="{{ old('name') }}"
@@ -47,7 +46,22 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="space-y-2">
+                        <label for="name_en" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            {{ __('message.name_en') }} <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="name_en" name="name_en" value="{{ old('name_en') }}"
+                                   placeholder="نام لاتین محصول را وارد کنید"
+                                   class="w-full px-10 py-3 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500"
+                                   required>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                     <div class="space-y-2">
                         <label for="slug" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                             {{ __('message.slug') }} <span class="text-red-500">*</span>
@@ -65,59 +79,69 @@
                         </div>
                     </div>
                     <div>
-                        <label for="buy_price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('message.original_price') }} *
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="original_price">
+                                {{__('message.original_price')}}
+                                <span class="font-bold text-red-600 px-2">*</span>
+                            </label>
+                            <span class="original_price font-bold mb-2 dark:text-gray-50"></span>
+                        </div>
                         <input
-                            type="number"
+                            type="text"
                             id="original_price"
                             name="original_price"
                             value="{{ old('original_price') }}"
                             placeholder="{{ __('message.original_price') }}"
-                            min="0"
-                            step="10000"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:border-blue-500"
                             required
                         >
                     </div>
                     <div>
-                        <label for="buy_price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('message.buy_price') }} *
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="buy_price">
+                                {{__('message.buy_price')}}
+                                <span class="font-bold text-red-600 px-2">*</span>
+                            </label>
+                            <span class="buy_price font-bold mb-2 dark:text-gray-50"></span>
+                        </div>
                         <input
-                                type="number"
+                                type="text"
                                 id="buy_price"
                                 name="buy_price"
                                 value="{{ old('buy_price') }}"
                                 placeholder="{{ __('message.buy_price') }}"
-                                min="0"
-                                step="10000"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:border-blue-500"
                                 required
                         >
                     </div>
                     <div>
-                        <label for="discount" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('message.discount') }} *
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="discount">
+                                {{__('message.discount')}}
+                                <span class="font-bold text-red-600 px-2">*</span>
+                            </label>
+                            <span class="discount font-bold mb-2 dark:text-gray-50"></span>
+                        </div>
                         <input
-                            type="number"
+                            type="text"
                             id="discount"
                             name="discount"
                             value="{{ old('discount') }}"
                             placeholder="{{ __('message.discount') }}"
-                            min="0"
-                            step="100"
                             class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:border-blue-500"
                             required
                         >
                     </div>
                     <div>
-                        <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('message.price') }} *
-                        </label>
+                        <div class="flex justify-between">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="price">
+                                {{__('message.price')}}
+                                <span class="font-bold mb-2 dark:text-red-500">*</span>
+                            </label>
+                            <span class="price font-bold mb-2 dark:text-gray-50"></span>
+                        </div>
                         <input
-                                type="number"
+                                type="text"
                                 id="price"
                                 name="price"
                                 value="{{ old('price') }}"
@@ -128,13 +152,13 @@
                                 required
                         >
                     </div>
-
                     <div>
                         <label for="quantity" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            {{ __('message.quantity') }} *
+                            {{ __('message.quantity') }}
+                            <span class="font-bold mb-2 dark:text-red-500">*</span>
                         </label>
                         <input
-                                type="number"
+                                type="text"
                                 id="quantity"
                                 name="quantity"
                                 value="{{ old('quantity') }}"
@@ -144,7 +168,6 @@
                                 required
                         >
                     </div>
-
                     <div>
                         <x-search-select
                                 name="category_id"
@@ -158,7 +181,6 @@
                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
-
                     <div>
                         <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             {{ __('message.status') }}
@@ -173,7 +195,6 @@
                             <option value="soon">{{ __('message.soon') }}</option>
                         </select>
                     </div>
-
                     <div>
                      <x-file-previewer name="image"
                                       label="عکس "
@@ -183,7 +204,15 @@
                                       :maxSize="config('file-upload.max_file_upload')"
                     />
                      </div>
-
+                    <div>
+                        <x-file-previewer name="gallery"
+                                          label="گالری عکس "
+                                          :multiple="true"
+                                          lang="fa"
+                                          accept="image/*"
+                                          :maxSize="config('file-upload.max_file_upload')"
+                        />
+                    </div>
                     <div class="md:col-span-2">
                         <x-ckeditor-admin
                                     name="description"
@@ -200,7 +229,7 @@
                             />
                     </div>
                 </div>
-
+                @include('admin.partials.meta')
                 <!-- Submit Button -->
                 <div class="mt-6 flex items-center justify-end">
                     <button type="submit"
@@ -218,7 +247,29 @@
     </div>
 @endsection
 @push('script')
+    <script src="{{url('/js/numtopersian.min.js')}}"></script>
     <script>
+        $('body').on('keyup', '#price', function() {
+            let price=Num2persian($(this).val())+" {{__('message.toman')}} ";
+            $('.price').html(price);
+        });
+        $('body').on('keyup', '#buy_price', function() {
+            let buy_price=Num2persian($(this).val())+" {{__('message.toman')}} ";
+            $('.buy_price').html(buy_price);
+        });
+        $('body').on('keyup', '#original_price', function() {
+            let original_price=Num2persian($(this).val())+" {{__('message.toman')}} ";
+            $('.original_price').html(original_price);
+        });
+        $('body').on('keyup', '#discount', function() {
+            let discount=$(this).val();
+            let original=$('#original_price').val();
+            let result=$('#price').val(original-(original*discount/100));
+            let price_1=Num2persian($('#price').val())+" {{__('message.toman')}} ";
+            console.log(result+'  '+price_1);
+            $('.price').html(price_1);
+        });
+
         $(document).ready(function () {
             $("#name").keyup(function () {
                 let name = $(this).val();

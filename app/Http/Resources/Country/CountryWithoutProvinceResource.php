@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Country;
 
-use Illuminate\Http\Request;
 use App\Http\Resources\File\FileResource;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CountryWithoutProvinceResource extends JsonResource

@@ -23,6 +23,9 @@ class ContentCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Content::rules();
+        return Content::rules([
+            'previous_url'=>'nullable|string',
+            'image'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

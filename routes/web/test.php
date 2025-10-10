@@ -10,6 +10,8 @@ Route::get('/clear', function () {
     Artisan::call('optimize:clear');
     Artisan::call('storage:link');
     Artisan::call('config:cache');
+    Artisan::call('route:cache');
+    Artisan::call('view:cache');
 });
 
 Route::get('update-city',function(){

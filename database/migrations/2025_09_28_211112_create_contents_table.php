@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type',['contact-us','about-us','rules'])->unique();
+            $table->enum('type',['contact-us','about-us','rules','privacy'])->unique();
             $table->longText('description')->nullable();
             $table->boolean('status')->default(false);
             $table->timestamps();

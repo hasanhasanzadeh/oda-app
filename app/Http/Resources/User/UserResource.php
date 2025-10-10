@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\User;
 
-use App\Http\Resources\City\CityResource;
 use App\Http\Resources\File\AvatarResource;
 use App\Http\Resources\File\FileResource;
 use App\Http\Resources\Notification\NotificationCollection;
@@ -32,12 +31,10 @@ class UserResource extends JsonResource
             'address' => $this->address,
             'email_verified_at' => $this->email_verified_at,
             'mobile_verified_at' => $this->mobile_verified_at,
-            'referral_code' => $this->referral_code,
             'birthday' => verta($this->birthday)->formatJalaliDate(),
             'created_at' => verta($this->created_at)->formatDatetime(),
             'created_at_day' => Carbon::parse($this->created_at)->diffInDays(),
             'avatar'=>$this->avatar ? new FileResource($this->avatar):new AvatarResource($this),
-            'city'=>$this->city ? new CityResource($this->city): null,
             'notifications'=>$this->notifications ? new NotificationCollection($this->notifications): null,
             'notification_count'=>$this->notifications()->count(),
         ];

@@ -25,6 +25,10 @@ class BlogCreateRequest extends FormRequest
      */
     public function rules()
     {
-        return  Blog::rules();
+        return  Blog::rules([
+            'previous_url'=>'nullable|string',
+            'image'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'video'=>'nullable|file|mimes:mp4|max:'. config('file-upload.max_video_upload'),
+        ]);
     }
 }

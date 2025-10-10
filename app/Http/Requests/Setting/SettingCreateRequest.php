@@ -24,6 +24,10 @@ class SettingCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Setting::rules();
+        return Setting::rules([
+            'previous_url'=>'nullable|string',
+            'favicon'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'logo'=>'required|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

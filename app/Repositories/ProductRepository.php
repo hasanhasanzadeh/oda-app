@@ -5,6 +5,7 @@ use App\Helpers\Helper;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -45,36 +46,73 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function create(array $data)
     {
-        $product = Product::create($data);
-        if (isset($data['image'])) {
-            $path = str_replace('public', 'storage', $data['image']->store('public/products'));
-            $product->photo()->create(['path' => $path]);
-        }
-        return $product;
+        DB::transaction(function () use ($data) {
+            $data['photo_id'] = Helper::uploadImage($data['image']);
+            $product = Product::create($data);
+            $product->meta()->create([
+                'meta_title'=>$data['meta_title'],
+                'meta_keywords'=>$data['meta_keywords'],
+                'meta_description'=>$data['meta_description']
+            ]);
+            if (isset($data['gallery']) && is_array($data['gallery'])){
+                foreach ($data['gallery'] as $gallery){
+                    $path=str_replace('public','storage',$gallery->store('public/products'));
+                    $product->gallery()->create(['path'=>$path]);
+                }
+            }
+            return $product;
+        });
+
     }
 
     public function update($id, array $data)
     {
-        $product = Product::findOrFail($id);
-        if (isset($data['image'])) {
-            if ($product->photo) {
-                Helper::deleteFile($product->photo->url);
-                $product->photo()->delete();
+        DB::transaction(function () use ($id, $data) {
+            $product = Product::findOrFail($id);
+            if (isset($data['image'])){
+                if ($product->photo){
+                    Helper::deleteFile($product->photo->url);
+                    $product->photo()->delete();
+                }
+                $data['photo_id'] = Helper::uploadImage($data['image']->file('image'));
             }
-            $path = str_replace('public', 'storage', $data['image']->store('public/products'));
-            $product->photo()->create(['path' => $path]);
-        }
-        $product->update($data);
-        return $product;
+            if (isset($data['gallery']) && is_array($data['gallery'])){
+                if ($product->gallery){
+                    foreach ($product->gallery as $photo){
+                        Helper::deleteFile($photo->url);
+                    }
+                    $product->gallery()->delete();
+                }
+                foreach ($data['gallery'] as $gallery){
+                    $path=str_replace('public','storage',$gallery->store('public/products'));
+                    $product->gallery()->create(['path'=>$path]);
+                }
+            }
+            $product->meta()->find($product->meta->id)->update([
+                'meta_title'=>$data['meta_title'],
+                'meta_keywords'=>$data['meta_keywords'],
+                'meta_description'=>$data['meta_description']
+            ]);
+            $product->update($data);
+            return $product;
+        });
     }
 
     public function delete($id)
     {
-        $product = Product::findOrFail($id);
-        if ($product->photo) {
-            Helper::deleteFile($product->photo->url);
-            $product->photo()->delete();
-        }
-        return $product->delete();
+        DB::transaction(function () use ($id) {
+            $product = Product::findOrFail($id);
+            if ($product->photo) {
+                Helper::deleteFile($product->photo->url);
+                $product->photo()->delete();
+            }
+            if ($product->gallery){
+                foreach ($product->gallery as $photo){
+                    Helper::deleteFile($photo->url);
+                }
+                $product->gallery()->delete();
+            }
+            return $product->delete();
+        });
     }
 }

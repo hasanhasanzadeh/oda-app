@@ -4,8 +4,6 @@ namespace App\Http\Resources\Notification;
 
 use App\Http\Resources\Category\CategoryResource;
 use Illuminate\Http\Request;
-use Hekmatinasser\Verta\Verta;
-use App\Http\Resources\File\FileResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class NotificationCollection extends ResourceCollection

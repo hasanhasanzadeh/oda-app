@@ -25,6 +25,7 @@ class QuestionUpdateRequest extends FormRequest
     {
         return Qaq::rules([
             'title'=>'required|max:256|string|unique:questions,title,'.$this->id,
+            'previous_url'=>'nullable|string',
         ]);
     }
 }

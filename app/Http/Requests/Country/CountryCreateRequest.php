@@ -23,6 +23,8 @@ class CountryCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Country::rules();
+        return Country::rules([
+            'flag'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

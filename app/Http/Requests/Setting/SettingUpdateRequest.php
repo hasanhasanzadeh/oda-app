@@ -25,6 +25,7 @@ class SettingUpdateRequest extends FormRequest
     public function rules(): array
     {
         return Setting::rules([
+            'previous_url'=>'nullable|string',
             'title'=>'required|string|max:256|unique:settings,title,'.$this->id,
         ]);
     }

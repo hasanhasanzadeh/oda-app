@@ -25,6 +25,7 @@ class CityUpdateRequest extends FormRequest
         return [
             'province_id'=>'required|exists:provinces,id',
             'city_name'=>'required|unique:cities,name,'.$this->id,
+            'previous_url'=>'nullable|string',
         ];
     }
 }

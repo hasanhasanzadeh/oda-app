@@ -27,6 +27,8 @@ class CustomerUpdateRequest extends FormRequest
         return User::rules([
             'national_code' => 'nullable|numeric|digits:10|unique:users,national_code,'.$this->id,
             'email' => 'nullable|email|max:100|unique:users,email,' . $this->id,
+            'previous_url'=>'nullable|string',
+            'avatar'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

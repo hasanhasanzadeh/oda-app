@@ -249,7 +249,7 @@ return [
     'reference_id'=>'reference id',
     'transaction_result'=>'transaction_result',
     'email_verified_at'=>'email verified at',
-    
+
     // New entities
     'books' => 'Books',
     'book' => 'Book',
@@ -275,7 +275,7 @@ return [
     'department' => 'Department',
     'exams' => 'Exams',
     'exam' => 'Exam',
-    
+
     // Common fields
     'sku' => 'SKU',
     'quantity' => 'Quantity',
@@ -324,67 +324,67 @@ return [
     'no_students' => 'No students available',
     'confirm_remove_image' => 'Are you sure you want to remove the image?',
     'confirm_remove_video' => 'Are you sure you want to remove the video?',
-    
+
     // Book specific
     'latest_books' => 'Latest Books',
     'book_list_description' => 'List of latest books registered in the system',
     'search_books' => 'Search in books...',
-    
+
     // Product specific
     'latest_products' => 'Latest Products',
     'product_list_description' => 'List of latest products registered in the system',
     'search_products' => 'Search in products...',
-    
+
     // Group specific
     'latest_groups' => 'Latest Groups',
     'group_list_description' => 'List of latest groups registered in the system',
     'search_groups' => 'Search in groups...',
-    
+
     // Holiday specific
     'latest_holidays' => 'Latest Holidays',
     'holiday_list_description' => 'List of latest holidays registered in the system',
     'search_holidays' => 'Search in holidays...',
-    
+
     // Institute specific
     'latest_institutes' => 'Latest Institutes',
     'institute_list_description' => 'List of latest institutes registered in the system',
     'search_institutes' => 'Search in institutes...',
-    
+
     // Level specific
     'latest_levels' => 'Latest Levels',
     'level_list_description' => 'List of latest levels registered in the system',
     'search_levels' => 'Search in levels...',
-    
+
     // Term specific
     'latest_terms' => 'Latest Terms',
     'term_list_description' => 'List of latest terms registered in the system',
     'search_terms' => 'Search in terms...',
-    
+
     // Mark specific
     'latest_marks' => 'Latest Marks',
     'mark_list_description' => 'List of latest marks registered in the system',
     'search_marks' => 'Search in marks...',
-    
+
     // Room specific
     'latest_rooms' => 'Latest Rooms',
     'room_list_description' => 'List of latest rooms registered in the system',
     'search_rooms' => 'Search in rooms...',
-    
+
     // Course specific
     'latest_courses' => 'Latest Courses',
     'course_list_description' => 'List of latest courses registered in the system',
     'search_courses' => 'Search in courses...',
-    
+
     // Department specific
     'latest_departments' => 'Latest Departments',
     'department_list_description' => 'List of latest departments registered in the system',
     'search_departments' => 'Search in departments...',
-    
+
     // Exam specific
     'latest_exams' => 'Latest Exams',
     'exam_list_description' => 'List of latest exams registered in the system',
     'search_exams' => 'Search in exams...',
-    
+
     // Filter and search
     'filter' => 'Filter',
     'clear_filter' => 'Clear Filter',
@@ -442,4 +442,9 @@ return [
     'institute_statistics'=>'institute statistics',
     'institutes_activated'=>'institutes activated successfully',
     'institutes_deactivated'=>'institutes deactivated successfully',
+    'privacy'=>'privacy',
+    'original_price'=>'original price',
+    'discount'=>'discount',
+    'name_en'=>'name latin',
+    'toman'=>'toman',
 ];

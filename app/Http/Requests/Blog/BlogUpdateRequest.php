@@ -25,8 +25,10 @@ class BlogUpdateRequest extends FormRequest
     public function rules(): array
     {
         return Blog::rules([
+            'previous_url'=>'nullable|string',
             'slug'=> 'required|string|min:2|unique:blogs,slug,'.$this->id,
-            'image' => 'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'video'=>'nullable|file|mimes:mp4|max:'. config('file-upload.max_video_upload'),
         ]);
     }
 }

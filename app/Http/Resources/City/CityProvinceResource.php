@@ -3,8 +3,6 @@
 namespace App\Http\Resources\City;
 
 use App\Http\Resources\Auth\AuthorResource;
-use App\Http\Resources\File\FileResource;
-use App\Http\Resources\Province\ProvinceResource;
 use App\Http\Resources\Province\ProvinceWithoutCityResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;

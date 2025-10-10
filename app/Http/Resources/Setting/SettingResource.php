@@ -3,9 +3,9 @@
 namespace App\Http\Resources\Setting;
 
 use App\Http\Resources\File\FileResource;
-use App\Http\Resources\Meta\MetaResource;
 use App\Http\Resources\SocialMedia\SocialMediaResource;
 use App\Http\Resources\Symbol\SymbolCollection;
+use App\Http\Resources\Meta\MetaResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

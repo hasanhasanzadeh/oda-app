@@ -28,6 +28,7 @@ class CountryUpdateRequest extends FormRequest
             'country_name'=>'required|string|min:2|max:70|unique:countries,country_name,'.$this->id,
             'country_code'=>'required|string|max:2|unique:countries,country_code,'.$this->id,
             'country_persian_name'=>'required|string|max:70|unique:countries,country_persian_name,'.$this->id,
+            'flag'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

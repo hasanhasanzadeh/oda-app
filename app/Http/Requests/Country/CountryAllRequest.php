@@ -29,6 +29,7 @@ class CountryAllRequest extends FormRequest
             'search'=>'nullable|string',
             'from_date'=>'nullable|date_format:Y-m-d',
             'to_date'=>'nullable|date_format:Y-m-d',
+            'previous_url'=>'nullable|string',
         ];
     }
 }

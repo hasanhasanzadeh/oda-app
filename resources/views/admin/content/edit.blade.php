@@ -71,6 +71,7 @@
                             <option value="contact-us" {{ $content->type == 'contact-us' ? 'selected' : '' }}>{{ __('message.contact-us') }}</option>
                             <option value="about-us" {{ $content->type == 'about-us' ? 'selected' : '' }}>{{ __('message.about-us') }}</option>
                             <option value="rules" {{ $content->type == 'rules' ? 'selected' : '' }}>{{ __('message.rules') }}</option>
+                            <option value="privacy" {{ $content->type == 'privacy' ? 'selected' : '' }}>{{ __('message.privacy') }}</option>
                         </select>
                     </div>
                 </div>

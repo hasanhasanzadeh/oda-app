@@ -24,6 +24,8 @@ class QuestionCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return Qaq::rules();
+        return Qaq::rules([
+            'previous_url'=>'nullable|string',
+        ]);
     }
 }

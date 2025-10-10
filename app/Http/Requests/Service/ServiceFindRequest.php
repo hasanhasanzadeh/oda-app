@@ -23,7 +23,8 @@ class ServiceFindRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'previous_url'=>'nullable|string',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ];
     }
 }

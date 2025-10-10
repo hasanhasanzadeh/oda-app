@@ -26,6 +26,7 @@ class ProvinceCreateRequest extends FormRequest
         return [
             'country_id'=>'required|exists:countries,id',
             'province_name'=>'required|unique:provinces,id',
+            'previous_url'=>'nullable|string',
         ];
     }
 }

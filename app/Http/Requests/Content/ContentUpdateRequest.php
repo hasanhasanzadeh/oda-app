@@ -25,7 +25,9 @@ class ContentUpdateRequest extends FormRequest
     {
         return Content::rules([
             'title'=>'required|string|max:256|unique:pages,title,'.$this->id,
-            'type'=>'required|string|in:contact-us,about-us,rules|unique:contents,type,'.$this->id,
+            'type'=>'required|string|in:contact-us,about-us,rules,privacy|unique:contents,type,'.$this->id,
+            'previous_url'=>'nullable|string',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

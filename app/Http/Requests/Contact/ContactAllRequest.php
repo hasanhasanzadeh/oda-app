@@ -30,6 +30,7 @@ class ContactAllRequest extends FormRequest
             'from_date'=>'nullable|date_format:Y-m-d',
             'to_date'=>'nullable|date_format:Y-m-d',
             'read'=>'nullable|in:true,false',
+            'previous_url'=>'nullable|string',
         ];
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\User;
 
-use App\Http\Resources\City\CityResource;
 use App\Http\Resources\File\AvatarResource;
 use App\Http\Resources\File\FileResource;
 use Carbon\Carbon;
@@ -38,7 +37,6 @@ class UserCollection extends ResourceCollection
                     'created_at' => verta($item->created_at)->formatDatetime(),
                     'created_at_day' => Carbon::parse($item->created_at)->diffInDays(),
                     'avatar'=>$item->avatar ? new FileResource($item->avatar):new AvatarResource($item),
-                    'city'=>$item->city ? new CityResource($item->city): null,
                 ];
             }),
             'pagination' => [

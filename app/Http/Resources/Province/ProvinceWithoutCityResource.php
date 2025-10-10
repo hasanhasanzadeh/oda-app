@@ -2,11 +2,7 @@
 
 namespace App\Http\Resources\Province;
 
-use App\Http\Resources\Auth\AuthorResource;
-use App\Http\Resources\City\CityCollection;
-use App\Http\Resources\Country\CountryResource;
 use App\Http\Resources\Country\CountryWithoutProvinceResource;
-use App\Http\Resources\File\FileResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

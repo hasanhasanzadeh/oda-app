@@ -8,10 +8,10 @@ use App\Http\Resources\Advertisement\AdvertisementUserResource;
 use App\Http\Resources\Payment\PaymentCollection;
 use App\Http\Resources\Payment\PaymentResource;
 use App\Models\Advertisement;
+use App\Models\Payment;
 use App\Models\Setting;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
-use App\Models\Payment;
 use Shetabit\Payment\Facade\Payment as ShetabitPayment;
 
 class PaymentController extends Controller

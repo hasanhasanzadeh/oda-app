@@ -27,7 +27,10 @@ class ProductUpdateRequest extends FormRequest
         return Product::rules([
             'name'=> 'required|string|min:2|unique:products,name,'.$this->id,
             'slug'=> 'required|string|min:2|unique:products,slug,'.$this->id,
-            'image' => 'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
+            'previous_url'=>'nullable|string',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'gallery'=>'nullable|array',
+            'gallery.*'=>'image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

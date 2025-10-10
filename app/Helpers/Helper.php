@@ -7,6 +7,16 @@ use Illuminate\Support\Facades\Storage;
 
 class Helper
 {
+
+    public static function maxFileUpload(): string
+    {
+        return config('file-upload.max_file_upload');
+    }
+
+    public static function maxVideoUpload():string
+    {
+        return config('file-upload.max_video_upload');
+    }
     public static function convertPersianToEnglishNumbers($input): array|string
     {
         $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];

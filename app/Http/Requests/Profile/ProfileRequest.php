@@ -24,6 +24,9 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        return User::rules();
+        return User::rules([
+            'previous_url'=>'nullable|string',
+            'avatar'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+        ]);
     }
 }

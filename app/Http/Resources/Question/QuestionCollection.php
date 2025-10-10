@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Question;
 
-use App\Http\Resources\File\FileResource;
-use App\Http\Resources\Meta\MetaResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

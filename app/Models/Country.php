@@ -23,7 +23,6 @@ class Country extends Model
         'country_name'=>'required|string|min:2|max:70|unique:countries,country_name',
         'country_code'=>'required|string|max:2|unique:countries,country_code',
         'country_persian_name'=>'required|string|max:70|unique:countries,country_persian_name',
-        'flag'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5200',
     ];
 
     /*

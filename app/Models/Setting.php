@@ -40,8 +40,6 @@ class Setting extends Model
         'email'=>'required|string|max:255',
         'address'=>'required|string|max:255',
         'support_text'=>'required|string|max:255',
-        'logo'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
-        'favicon'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
         'meta_title'=>'required|string|min:2|max:255',
         'meta_description'=>'required|string|min:2|max:255',
         'meta_keywords'=>'required|string|min:2|max:255',

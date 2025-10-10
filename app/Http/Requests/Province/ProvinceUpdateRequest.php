@@ -25,6 +25,7 @@ class ProvinceUpdateRequest extends FormRequest
         return [
             'country_id'=>'required|exists:countries,id',
             'province_name'=>'required|unique:provinces,id,'.$this->id,
+            'previous_url'=>'nullable|string',
         ];
     }
 }

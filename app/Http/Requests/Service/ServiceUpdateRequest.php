@@ -24,7 +24,8 @@ class ServiceUpdateRequest extends FormRequest
     public function rules(): array
     {
         return Service::rules([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5200',
+            'previous_url'=>'nullable|string',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

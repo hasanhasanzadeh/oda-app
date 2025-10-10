@@ -8,7 +8,7 @@ use App\Http\ApiRequests\Auth\LoginApiRequest;
 use App\Http\ApiRequests\User\UserUpdateApiRequest;
 use App\Http\ApiRequests\User\UserUpdateAvatarApiRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\User\UserResource;
+use App\Models\Resources\User\UserResource;
 use App\Notifications\UserNotification;
 use App\Services\ActivationCodeService;
 use App\Services\AuthService;

@@ -24,7 +24,8 @@ class PermissionUpdateRequest extends FormRequest
     {
         return [
             'name'=>'required|string|min:3|max:256|unique:permissions,name,'.$this->id,
-            'display_name'=>'required|string|min:3|max:256'
+            'display_name'=>'required|string|min:3|max:256',
+            'previous_url'=>'nullable|string',
         ];
     }
 }

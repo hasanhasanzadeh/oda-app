@@ -69,6 +69,7 @@
                             <option value="contact-us" >{{ __('message.contact-us') }}</option>
                             <option value="about-us" >{{ __('message.about-us') }}</option>
                             <option value="rules" >{{ __('message.rules') }}</option>
+                            <option value="privacy" >{{ __('message.privacy') }}</option>
                         </select>
                     </div>
                 </div>

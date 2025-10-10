@@ -25,7 +25,8 @@ class CategoryUpdateRequest extends FormRequest
     {
         return Category::rules([
             'slug'=>'required|string|max:256|unique:categories,slug,'.$this->id,
-            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:5048',
+            'previous_url'=>'nullable|string',
+            'image'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }
 }

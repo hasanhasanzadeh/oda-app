@@ -24,7 +24,9 @@ class SettingFindRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'previous_url'=>'nullable|string',
+            'favicon'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
+            'logo'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ];
     }
 }

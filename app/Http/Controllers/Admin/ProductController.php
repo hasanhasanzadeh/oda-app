@@ -19,6 +19,7 @@ use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -72,7 +73,14 @@ class ProductController extends Controller
     public function edit(ProductUpdateFormRequest $request,Product $product)
     {
         $title = __('message.edit');
-
+        $product->gallery = $product->gallery->map(function ($item) {
+            return [
+                'address' => $item->address,
+                'type' => $item->type,
+                'name' => basename($item->address),
+                'url' => $item->address,
+            ];
+        });
         return view('admin.product.edit', compact(['title', 'product']));
     }
 

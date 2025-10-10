@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources\Blog;
 
-use App\Http\Resources\Category\CategoryResource;
+use App\Http\Resources\File\FileResource;
+use App\Http\Resources\Meta\MetaResource;
 use App\Http\Resources\Tag\TagCollection;
 use Illuminate\Http\Request;
-use App\Http\Resources\Meta\MetaResource;
-use App\Http\Resources\File\FileResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BlogResource extends JsonResource

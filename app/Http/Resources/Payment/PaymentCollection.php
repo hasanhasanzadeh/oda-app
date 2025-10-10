@@ -2,10 +2,8 @@
 
 namespace App\Http\Resources\Payment;
 
-use App\Helpers\Helper;
 use App\Http\Resources\AvailableFlight\AvailableFlightResource;
 use Illuminate\Http\Request;
-use App\Http\Resources\File\FileResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class PaymentCollection extends ResourceCollection

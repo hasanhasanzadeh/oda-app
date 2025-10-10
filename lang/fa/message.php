@@ -249,7 +249,7 @@ return [
     'reference_id'=>'شناسه مرجع پرداختی',
     'transaction_result'=>'نتیجه پرداختی',
     'email_verified_at'=>'ایمیل تایید شده',
-    
+
     // New entities
     'books' => 'کتاب‌ها',
     'book' => 'کتاب',
@@ -275,7 +275,7 @@ return [
     'department' => 'بخش',
     'exams' => 'امتحانات',
     'exam' => 'امتحان',
-    
+
     // Common fields
     'sku' => 'کد محصول',
     'quantity' => 'موجودی',
@@ -324,67 +324,67 @@ return [
     'no_students' => 'دانش‌آموزی وجود ندارد',
     'confirm_remove_image' => 'آیا از حذف تصویر اطمینان دارید؟',
     'confirm_remove_video' => 'آیا از حذف ویدیو اطمینان دارید؟',
-    
+
     // Book specific
     'latest_books' => 'آخرین کتاب‌ها',
     'book_list_description' => 'لیست آخرین کتاب‌های ثبت شده در سیستم',
     'search_books' => 'جستجو در کتاب‌ها...',
-    
+
     // Product specific
     'latest_products' => 'آخرین محصولات',
     'product_list_description' => 'لیست آخرین محصولات ثبت شده در سیستم',
     'search_products' => 'جستجو در محصولات...',
-    
+
     // Group specific
     'latest_groups' => 'آخرین گروه‌ها',
     'group_list_description' => 'لیست آخرین گروه‌های ثبت شده در سیستم',
     'search_groups' => 'جستجو در گروه‌ها...',
-    
+
     // Holiday specific
     'latest_holidays' => 'آخرین تعطیلات',
     'holiday_list_description' => 'لیست آخرین تعطیلات ثبت شده در سیستم',
     'search_holidays' => 'جستجو در تعطیلات...',
-    
+
     // Institute specific
     'latest_institutes' => 'آخرین موسسه‌ها',
     'institute_list_description' => 'لیست آخرین موسسه‌های ثبت شده در سیستم',
     'search_institutes' => 'جستجو در موسسه‌ها...',
-    
+
     // Level specific
     'latest_levels' => 'آخرین سطوح',
     'level_list_description' => 'لیست آخرین سطوح ثبت شده در سیستم',
     'search_levels' => 'جستجو در سطوح...',
-    
+
     // Term specific
     'latest_terms' => 'آخرین ترم‌ها',
     'term_list_description' => 'لیست آخرین ترم‌های ثبت شده در سیستم',
     'search_terms' => 'جستجو در ترم‌ها...',
-    
+
     // Mark specific
     'latest_marks' => 'آخرین نمرات',
     'mark_list_description' => 'لیست آخرین نمرات ثبت شده در سیستم',
     'search_marks' => 'جستجو در نمرات...',
-    
+
     // Room specific
     'latest_rooms' => 'آخرین کلاس‌ها',
     'room_list_description' => 'لیست آخرین کلاس‌های ثبت شده در سیستم',
     'search_rooms' => 'جستجو در کلاس‌ها...',
-    
+
     // Course specific
     'latest_courses' => 'آخرین دوره‌ها',
     'course_list_description' => 'لیست آخرین دوره‌های ثبت شده در سیستم',
     'search_courses' => 'جستجو در دوره‌ها...',
-    
+
     // Department specific
     'latest_departments' => 'آخرین بخش‌ها',
     'department_list_description' => 'لیست آخرین بخش‌های ثبت شده در سیستم',
     'search_departments' => 'جستجو در بخش‌ها...',
-    
+
     // Exam specific
     'latest_exams' => 'آخرین امتحانات',
     'exam_list_description' => 'لیست آخرین امتحانات ثبت شده در سیستم',
     'search_exams' => 'جستجو در امتحانات...',
-    
+
     // Filter and search
     'filter' => 'فیلتر',
     'clear_filter' => 'پاک کردن فیلتر',
@@ -442,4 +442,9 @@ return [
     'institute_statistics'=>'آمار موسسه',
     'institutes_activated'=>'موسسات با موفقیت فعال شدند',
     'institutes_deactivated'=>'موسسات با موفقیت غیرفعال شدند',
+    'privacy'=>'حریم خصوصی',
+    'original_price'=>'قیمت اصلی',
+    'discount'=>'تخفیف',
+    'name_en'=>'نام لاتین',
+    'toman'=>'تومان',
 ];

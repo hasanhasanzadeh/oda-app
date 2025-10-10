@@ -26,6 +26,7 @@ class RoleCreateRequest extends FormRequest
         return [
             'name'=>'required|string|min:3|unique:roles,name',
             'display_name'=>'required|string|min:3',
+            'previous_url'=>'nullable|string',
         ];
     }
 }

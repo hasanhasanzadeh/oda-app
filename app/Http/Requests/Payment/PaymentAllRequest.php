@@ -30,6 +30,7 @@ class PaymentAllRequest extends FormRequest
             'from_date'=>'nullable|date_format:Y-m-d',
             'to_date'=>'nullable|date_format:Y-m-d',
             'role_type'=>'nullable|string',
+            'previous_url'=>'nullable|string',
         ];
     }
 }
