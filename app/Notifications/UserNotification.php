@@ -66,7 +66,7 @@ class UserNotification extends Notification
             $phoneNumber = $notifiable->mobile;
 
             $smsMessage = "کد تایید token%";
-            $pattern = 'VerificationNotification';
+            $pattern = 'verificationCodeNotification';
 
             $message = new Message($smsMessage);
             $message->useTemplateIfSupports(

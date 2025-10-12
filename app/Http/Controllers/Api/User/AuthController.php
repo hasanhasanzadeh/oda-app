@@ -7,15 +7,11 @@ use App\Http\ApiRequests\Auth\ActiveApiRequest;
 use App\Http\ApiRequests\Auth\LoginApiRequest;
 use App\Http\ApiRequests\User\UserUpdateApiRequest;
 use App\Http\ApiRequests\User\UserUpdateAvatarApiRequest;
-use App\Http\Controllers\Controller;
-use App\Models\Resources\User\UserResource;
+use App\Http\Resources\User\UserResource;
 use App\Notifications\UserNotification;
 use App\Services\ActivationCodeService;
 use App\Services\AuthService;
-use App\Services\NotificationService;
 use App\Services\UserService;
-use Carbon\Carbon;
-use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -91,7 +87,7 @@ readonly class AuthController
         return ApiResponse::success(null, 'شما با موفقیت خارج شدید');
     }
 
-    public function getProfile(Request $request): JsonResponse
+    public function getProfile(Request $request)
     {
         $user = $this->authService->getProfile();
         return ApiResponse::success(
