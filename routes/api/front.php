@@ -25,6 +25,7 @@ Route::prefix('v1')->group(callback: function ($route) {
         $route->get('/faq', [FaqController::class, 'index']);
         $route->get('/service', [ServiceController::class, 'index']);
         $route->get('/product', [ProductController::class, 'index']);
+        $route->get('/product/{slug}', [ProductController::class, 'show']);
         $route->get('/post', [PostController::class, 'index']);
 });
 

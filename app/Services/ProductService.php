@@ -15,6 +15,11 @@ readonly class ProductService
         return $this->productRepository->all($filters);
     }
 
+    public function findBySlug(string $slug)
+    {
+        return $this->productRepository->findBySlug($slug);
+    }
+
     public function find($id)
     {
         return $this->productRepository->find($id);

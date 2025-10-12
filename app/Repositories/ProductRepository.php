@@ -44,6 +44,10 @@ class ProductRepository implements ProductRepositoryInterface
         return Product::findOrFail($id);
     }
 
+    public function findBySlug($slug)
+    {
+        return Product::where('slug', $slug)->with(['photo','meta','gallery'])->firstOrFail();
+    }
     public function create(array $data)
     {
         DB::transaction(function () use ($data) {

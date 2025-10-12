@@ -25,6 +25,6 @@ class CategoryController extends Controller
     public function show($slug)
     {
         $category = $this->categoryService->findBySlug($slug);
-        return ApiResponse::success(data:new CategoryResource($category),message:'success');
+        return ApiResponse::success(data: new CategoryResource($category), message: 'success');
     }
 }

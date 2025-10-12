@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Models;
+
+use App\Base\Trait\HasRules;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
+class Post extends Model
+{
+    use HasFactory, HasRules;
+
+    protected $table = 'posts';
+    protected $fillable = [
+        'country_name',
+        'country_code',
+        'country_persian_name',
+    ];
+
+    protected static array $rules = [
+        'country_name'=>'required|string|min:2|max:70|unique:countries,country_name',
+        'country_code'=>'required|string|max:2|unique:countries,country_code',
+        'country_persian_name'=>'required|string|max:70|unique:countries,country_persian_name',
+    ];
+
+    /*
+     * ---------------------------
+     *          Relations
+     * ---------------------------
+     */
+
+    public function photo():morphOne
+    {
+        return $this->morphOne(File::class, 'fileable');
+    }
+}

@@ -87,6 +87,15 @@ class Product extends Model
         'meta_keywords'=>'required|string|min:3|max:1500',
     ];
 
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'active' => 'فعال',
+            'inactive' => 'غیرفعال',
+            'soon' => 'به زودی',
+            default => 'نامشخص',
+        };
+    }
     /*
      * ---------------------------
      *          Relations

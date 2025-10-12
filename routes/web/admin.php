@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PhotoController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProvinceController;
@@ -40,6 +41,7 @@ Route::prefix('admin')->middleware(['RoleType:admin','auth'])->group(function($r
     $route->resource('/cities',CityController::class);
     $route->resource('/products',ProductController::class);
     $route->resource('/contents',ContentController::class);
+    $route->resource('/posts',PostController::class);
 
     $route->get('/visits',[VisitController::class,'index'])->name('visits.index');
     $route->delete('/visits/{id}/delete',[VisitController::class,'destroy'])->name('visits.destroy');
