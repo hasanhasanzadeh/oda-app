@@ -3,11 +3,8 @@
 namespace App\Repositories;
 
 use App\Helpers\Helper;
-use App\Models\Phone;
 use App\Models\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-use Hekmatinasser\Verta\Facades\Verta;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 class UserRepository implements UserRepositoryInterface
