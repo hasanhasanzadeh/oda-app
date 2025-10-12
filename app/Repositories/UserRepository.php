@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface
             $perPage = 10;
         }
 
-        $allowedColumns = ['id', 'email','email_verified_at', 'created_at', 'role_type'];
+        $allowedColumns = ['id', 'email','email_verified_at','mobile', 'created_at', 'role_type'];
         if (!in_array($column, $allowedColumns)) {
             $column = 'created_at';
         }
@@ -31,11 +31,10 @@ class UserRepository implements UserRepositoryInterface
         $customers = User::query();
 
         if ($keyword = request('search')) {
-            $customers = $customers->with('phones')->orWhereAny(['first_name', 'last_name'], 'LIKE', "%{$keyword}%")
+            $customers = $customers->orWhereAny(['first_name', 'last_name'], 'LIKE', "%{$keyword}%")
                 ->orWhereAny(['first_name_en', 'last_name_en'], 'LIKE', "%{$keyword}%")
-                ->orWhereHas('phones', function ($query) use ($keyword) {
-                    $query->where('number', 'LIKE', "%{$keyword}%");
-            })->orWhere('email', 'LIKE', "%{$keyword}%")
+                ->orWhere('email', 'LIKE', "%{$keyword}%")
+                ->orWhere('mobile', 'LIKE', "%{$keyword}%")
                 ->orWhere('national_code', 'LIKE', "%{$keyword}%");
         }
         if (request('role_type')) {
@@ -64,23 +63,13 @@ class UserRepository implements UserRepositoryInterface
     {
         DB::beginTransaction();
         try{
+            if (!isset($data['role_type'])){
+                $data['role_type'] = 'user';
+            }
             $user = User::create($data);
             if (isset($data['avatar'])) {
                 $path = str_replace('public', 'storage', $data['avatar']->store('public/avatars'));
                 $user->avatar()->create(['path' => $path]);
-            }
-            $defaultPhoneIndex = $data['default_phone'];
-            foreach ($data['phones'] as $index => $phoneData) {
-                if (!empty($phoneData['number'])) {
-                    $phone = new Phone($phoneData);
-                    $phone->is_default = ($index == $defaultPhoneIndex);
-                    $user->phones()->save($phone);
-                }
-            }
-            foreach ($data['addresses'] as $addressData) {
-                if (!empty($addressData['content'])) {
-                    $user->addresses()->create($addressData);
-                }
             }
             DB::commit();
             return $user;
@@ -97,17 +86,13 @@ class UserRepository implements UserRepositoryInterface
         try {
             $user = User::findOrFail($id);
 
-            $userData = collect($data)->except(['phones', 'addresses', 'avatar', 'default_phone'])->toArray();
+            $userData = collect($data)->except(['avatar'])->toArray();
             if ($userData['password']==null) {
                 $userData['password'] = $user->password;
             }
             $user->update($userData);
 
             $this->updateUserAvatar($user, $data);
-
-            $this->updateUserPhones($user, $data);
-
-            $this->updateUserAddresses($user, $data);
 
             DB::commit();
             return $user->fresh();
@@ -136,47 +121,6 @@ class UserRepository implements UserRepositoryInterface
         $user->avatar()->create(['path' => $path]);
     }
 
-    private function updateUserPhones(User $user, array $data): void
-    {
-        if (!isset($data['phones']) || !is_array($data['phones'])) {
-            return;
-        }
-
-        $user->phones()->delete();
-
-        $defaultPhoneIndex = $data['default_phone'] ?? null;
-
-        foreach ($data['phones'] as $index => $phoneData) {
-            if (empty($phoneData['number'])) {
-                continue;
-            }
-
-            $phoneData['is_default'] = ($index == $defaultPhoneIndex);
-            $user->phones()->create($phoneData);
-        }
-
-        if ($user->phones()->count() > 0 && $user->phones()->where('is_default', true)->count() === 0) {
-            $user->phones()->first()->update(['is_default' => true]);
-        }
-    }
-
-    private function updateUserAddresses(User $user, array $data): void
-    {
-        if (!isset($data['addresses']) || !is_array($data['addresses'])) {
-            return;
-        }
-
-        $user->addresses()->delete();
-
-        foreach ($data['addresses'] as $addressData) {
-            if (empty($addressData['content'])) {
-                continue;
-            }
-
-            $user->addresses()->create($addressData);
-        }
-    }
-
     public function delete($id)
     {
         $user = User::findOrFail($id);
@@ -186,8 +130,6 @@ class UserRepository implements UserRepositoryInterface
                 Helper::deleteFile($user->avatar->url);
                 $user->avatar()->delete();
             }
-            $user->phones()->delete();
-            $user->addresses()->delete();
             $user->delete();
             DB::commit();
             return true;
