@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 readonly class AuthController
 {
-    public function __construct(private AuthService $authService, private ActivationCodeService $activationCodeService, private UserService $userService,private NotificationService $notificationService)
+    public function __construct(private AuthService $authService, private ActivationCodeService $activationCodeService, private UserService $userService)
     {
     }
 
