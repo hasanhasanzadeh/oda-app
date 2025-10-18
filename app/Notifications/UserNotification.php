@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\OtpCode;
 use App\Models\User;
 use HoomanMirghasemi\Sms\Channels\SmsChannel;
 use HoomanMirghasemi\Sms\Facades\Sms;
@@ -11,19 +12,19 @@ use Illuminate\Notifications\Notification;
 
 class UserNotification extends Notification
 {
-    protected User $user;
+    protected OtpCode $otpCode;
     protected string $message;
     protected string $subject;
     protected string $type;
     /**
      * Create a new notification instance.
      */
-    public function __construct($message, $subject = "Notification", $type = "all",User $user=null)
+    public function __construct($message, $subject = "Notification", $type = "all",OtpCode $otpCode=null)
     {
         $this->message = $message;
         $this->subject = $subject;
         $this->type = $type;
-        $this->user = $user;
+        $this->otpCode = $otpCode;
     }
 
     /**
@@ -49,10 +50,10 @@ class UserNotification extends Notification
      */
     public function toMail(object $notifiable): ?MailMessage
     {
-        if ($notifiable->mobile){
+        if ($notifiable->phone){
             return (new MailMessage)
                 ->subject($this->subject)
-                ->greeting("Hello, " . $notifiable->mobile)
+                ->greeting("Hello, " . $notifiable->phone)
                 ->line($this->message)
                 ->action('View Dashboard', url('/'))
                 ->line('Thank you for using our application!');
@@ -63,7 +64,7 @@ class UserNotification extends Notification
     public function toSms($notifiable)
     {
         if ($notifiable) {
-            $phoneNumber = $notifiable->mobile;
+            $phoneNumber = $notifiable->phone;
 
             $smsMessage = "کد تایید token%";
             $pattern = 'verificationCodeNotification';

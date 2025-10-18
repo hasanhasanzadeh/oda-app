@@ -134,7 +134,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+                                <a href="{{route('user.logout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
                                     <i class="fa fa-sign-out"></i>
                                     <span class="px-2">خروج</span>
                                 </a>

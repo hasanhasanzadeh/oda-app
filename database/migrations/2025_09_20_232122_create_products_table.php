@@ -32,7 +32,23 @@ return new class extends Migration
 
             $table->unsignedBigInteger('photo_id');
             $table->foreign('photo_id','files_products_photo_id_fk')->references('id')->on('files')->onDelete('cascade');
+            $table->string('brand')->nullable();
+            $table->boolean('is_featured')->default(false);
+            $table->integer('views')->default(0);
+            $table->json('specifications')->nullable();
             $table->timestamps();
+        });
+
+        Schema::create('favorites', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id','users_favorites_user_id_fk')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id','products_favorites_product_id_fk')->references('id')->on('products')->onDelete('cascade');
+
+            $table->timestamps();
+            $table->unique(['user_id', 'product_id']);
         });
     }
 
@@ -41,6 +57,12 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('favorites', function (Blueprint $table) {
+            $table->dropForeign('users_favorites_user_id_fk');
+            $table->dropForeign('products_favorites_product_id_fk');
+            $table->dropIfExists();
+        });
+
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign('categories_products_category_id_fk');
             $table->dropForeign('files_products_photo_id_fk');

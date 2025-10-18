@@ -117,7 +117,7 @@
                             پروفایل من
                         </a>
                         <div class="border-t dark:border-gray-700"></div>
-                        <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-red-600 transition-colors hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700">
+                        <a href="{{route('user.logout')}}" class="block px-4 py-2 text-sm text-red-600 transition-colors hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700">
                             <i class="ml-2 fas fa-sign-out-alt"></i>
                             خروج
                         </a>

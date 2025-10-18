@@ -12,10 +12,7 @@ use App\Http\Requests\Page\PageFindRequest;
 use App\Http\Requests\Page\PageUpdateFormRequest;
 use App\Http\Requests\Page\PageUpdateRequest;
 use App\Models\Page;
-use App\Models\Setting;
-use App\Models\User;
 use App\Services\PageService;
-use App\Services\SettingService;
 
 class PageController extends Controller
 {
@@ -112,7 +109,10 @@ class PageController extends Controller
 
     public function destroy(PageDeleteRequest $request, Page $page)
     {
-        $page->photo()->delete();
+        if ($page->photo){
+            Helper::deleteFile($page->photo->url);
+            $page->photo()->delete();
+        }
         $page->delete();
 
         toast(__('message.deleted'), 'success');

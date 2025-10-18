@@ -36,6 +36,7 @@ class PermissionSeeder extends Seeder
             'product',
             'post',
             'address',
+            'page',
         ];
 
         $values = [

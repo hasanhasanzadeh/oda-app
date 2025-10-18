@@ -84,9 +84,7 @@ class UserRepository implements UserRepositoryInterface
             $user = User::findOrFail($id);
 
             $userData = collect($data)->except(['avatar'])->toArray();
-            if ($userData['password']==null) {
-                $userData['password'] = $user->password;
-            }
+
             $user->update($userData);
 
             $this->updateUserAvatar($user, $data);

@@ -29,7 +29,7 @@
                                                  alt="{{ $customer->first_name }} {{ $customer->last_name }}">
                                         @else
                                             <div class="w-full h-full rounded-2xl bg-gradient-to-br from-indigo-400 via-purple-500 to-pink-500 flex items-center justify-center text-white text-4xl font-bold shadow-inner">
-                                                {{ strtoupper(substr($customer->first_name_en ?? $customer->first_name, 0, 1) . substr($customer->last_name_en ?? $customer->last_name, 0, 1)) }}
+                                                {{ strtoupper(substr($customer->first_name, 0, 1) . substr($customer->last_name, 0, 1)) }}
                                             </div>
                                         @endif
                                     </div>
@@ -79,10 +79,6 @@
                                     </span>
                                     @endif
                                 </div>
-
-                                @if($customer->first_name_en && $customer->last_name_en)
-                                    <p class="text-xl text-slate-600 dark:text-slate-300 mb-3 font-medium">{{ $customer->first_name_en }} {{ $customer->last_name_en }}</p>
-                                @endif
 
                                 <div class="flex items-center gap-6 text-slate-600 dark:text-slate-300">
                                     <div class="flex items-center gap-2">
@@ -142,27 +138,6 @@
                                         <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->last_name }}</p>
                                     </div>
 
-                                    @if($customer->first_name_en)
-                                        <div class="space-y-2">
-                                            <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">نام (انگلیسی)</label>
-                                            <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->first_name_en }}</p>
-                                        </div>
-                                    @endif
-
-                                    @if($customer->last_name_en)
-                                        <div class="space-y-2">
-                                            <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">نام خانوادگی (انگلیسی)</label>
-                                            <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->last_name_en }}</p>
-                                        </div>
-                                    @endif
-
-                                    @if($customer->father_name)
-                                        <div class="space-y-2">
-                                            <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">نام پدر</label>
-                                            <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->father_name }}</p>
-                                        </div>
-                                    @endif
-
                                     <div class="space-y-2">
                                         <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">جنسیت</label>
                                         <p class="text-lg font-semibold text-slate-900 dark:text-white capitalize">{{ $customer->gender_label }}</p>
@@ -190,10 +165,10 @@
                                             @case('admin')
                                                 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-700/50
                                                 @break
-                                            @case('manager')
+                                            @case('user')
                                                 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50
                                                 @break
-                                            @case('customer')
+                                            @case('staff')
                                                 bg-slate-100 dark:bg-slate-700/50 text-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50
                                                 @break
                                             @default
@@ -202,18 +177,6 @@
                                     ">
                                         {{ $customer->role_type_label }}
                                     </span>
-                                    </div>
-
-                                    @if($customer->city)
-                                        <div class="space-y-2">
-                                            <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">شهر</label>
-                                            <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->city->province->country->country_persian_name .'-'.$customer->city->province->name.'-'. $customer->city->name }}</p>
-                                        </div>
-                                    @endif
-
-                                    <div class="space-y-2">
-                                        <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">منطقه</label>
-                                        <p class="text-lg font-semibold text-slate-900 dark:text-white">{{ $customer->regin ?? '-' }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -256,24 +219,15 @@
                                             @endif
                                         </div>
                                     </div>
-
-                                    <!-- Phone Numbers -->
-                                    @if($customer->phones && $customer->phones->count() > 0)
-                                        @foreach($customer->phones as $phone)
-                                            <div class="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700/50 dark:to-slate-600/50 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-600/50">
+                                    <div class="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700/50 dark:to-slate-600/50 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-600/50">
                                                 <div class="flex items-center justify-between mb-3">
                                                     <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                                                        شماره {{ $phone->title ?? 'تلفن' }}
+                                                       شماره موبایل
                                                     </label>
-                                                    @if($phone->is_default)
-                                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-700/50">
-                                                    پیش‌فرض
-                                                </span>
-                                                    @endif
                                                 </div>
                                                 <div class="flex items-center gap-4">
-                                                    <p class="text-lg font-mono font-semibold text-slate-900 dark:text-white">{{ $phone->number }}</p>
-                                                    <a href="tel:{{ $phone->number }}"
+                                                    <p class="text-lg font-mono font-semibold text-slate-900 dark:text-white">{{ $customer->mobile }}</p>
+                                                    <a href="tel:{{ $customer->mobile }}"
                                                        class="group p-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-xl hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-all duration-300 transform hover:scale-110">
                                                         <svg class="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -281,13 +235,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @else
-                                        <div class="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700/50 dark:to-slate-600/50 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-600/50">
-                                            <label class="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 block">شماره تلفن</label>
-                                            <p class="text-slate-400 dark:text-slate-500 italic">شماره تلفنی ارائه نشده است</p>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -372,20 +319,19 @@
                                             <span class="text-red-600 dark:text-red-400 text-sm font-semibold">خیر</span>
                                         @endif
                                     </div>
-
+                                    <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl">
+                                        <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">تایید موبایل</span>
+                                        @if($customer->mobile_verified_at)
+                                            <span class="text-emerald-600 dark:text-emerald-400 text-sm font-semibold">بله</span>
+                                        @else
+                                            <span class="text-red-600 dark:text-red-400 text-sm font-semibold">خیر</span>
+                                        @endif
+                                    </div>
                                     <!-- Join Date -->
                                     <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl">
                                         <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">عضویت از</span>
                                         <span class="text-sm font-semibold text-slate-900 dark:text-white">{{ $customer->created_at->format('M Y') }}</span>
                                     </div>
-
-                                    <!-- Leave Date -->
-                                    @if($customer->leave_date)
-                                        <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-2xl">
-                                            <span class="text-sm font-semibold text-slate-600 dark:text-slate-300">تاریخ خروج</span>
-                                            <span class="text-sm font-semibold text-slate-900 dark:text-white">{{ \Carbon\Carbon::parse($customer->leave_date)->format('M d, Y') }}</span>
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
                         </div>

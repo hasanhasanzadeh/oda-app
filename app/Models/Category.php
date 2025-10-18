@@ -17,15 +17,23 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
+        'description',
         'parent_id',
-        'status',
+        'order',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected static array $rules = [
         'name' => 'required|string|min:3|max:255',
         'slug' => 'required|string|min:3|max:255|unique:categories,slug',
+        'description' => 'nullable|string|min:3|max:10000',
         'parent_id' => 'nullable|exists:categories,id',
-        'status' => 'nullable|in:1,0',
+        'is_active' => 'nullable|in:1,0',
+        'order' => 'nullable|numeric|min:0',
         'meta_title' => 'required|string|min:3|max:150',
         'meta_description' => 'required|string|min:3|max:255',
         'meta_keywords' => 'required|string|min:3|max:500',
@@ -41,13 +49,31 @@ class Category extends Model
         return $this->morphOne(File::class, 'fileable');
     }
 
-    public function children(): HasMany
-    {
-        return $this->hasMany(Category::class, 'parent_id', 'id');
-    }
+    // Relationships
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'parent_id', 'id');
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id')->orderBy('order');
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    // Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
+    public function scopeParent($query)
+    {
+        return $query->whereNull('parent_id');
     }
 
     public function meta(): MorphOne

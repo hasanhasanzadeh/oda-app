@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContentController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PhotoController;
@@ -42,6 +43,7 @@ Route::prefix('admin')->middleware(['RoleType:admin','auth'])->group(function($r
     $route->resource('/products',ProductController::class);
     $route->resource('/contents',ContentController::class);
     $route->resource('/posts',PostController::class);
+    $route->resource('/pages',PageController::class);
 
     $route->get('/visits',[VisitController::class,'index'])->name('visits.index');
     $route->delete('/visits/{id}/delete',[VisitController::class,'destroy'])->name('visits.destroy');

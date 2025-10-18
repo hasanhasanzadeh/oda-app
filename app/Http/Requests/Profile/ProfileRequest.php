@@ -26,6 +26,9 @@ class ProfileRequest extends FormRequest
     {
         return User::rules([
             'previous_url'=>'nullable|string',
+            'national_code'=>'nullable|numeric|digits:10|unique:users,national_code,'.auth()->id(),
+            'role_type'=>'prohibited',
+            'is_active'=>'prohibited',
             'avatar'=>'nullable|image|mimes:png,jpg,webp,jpeg,gif,svg,bmp,avif|max:'. config('file-upload.max_file_upload'),
         ]);
     }

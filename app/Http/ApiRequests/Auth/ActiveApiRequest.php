@@ -26,7 +26,7 @@ class ActiveApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'mobile'=>'required|ir_mobile:zero|exists:users,mobile',
+             'mobile'=>'required|ir_mobile:zero',
              'code'=>'required|numeric',
         ];
     }

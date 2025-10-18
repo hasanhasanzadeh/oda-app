@@ -16,8 +16,8 @@
             font-family: 'Lahzeh', sans-serif;
         }
         .golden-border {
-            border: 3px solid #FFD700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            border: 3px solid #295ba6;
+            box-shadow: 0 0 20px rgba(86, 161, 237, 0.3);
         }
 
         .golden-shadow {
@@ -25,8 +25,8 @@
         }
 
         .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
-            border-color: #FFD700;
+            box-shadow: 0 0 0 3px rgba(17, 126, 234, 0.3);
+            border-color: #0033ff;
         }
 
         .slide-enter {
@@ -86,14 +86,14 @@
         }
 
         .gradient-text {
-            background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
+            background: linear-gradient(135deg, #244e8e, #2641ca, #1957da);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .left-panel {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            background: linear-gradient(135deg, #4c79cf 0%, #2a47a3 50%, #0b1791 100%);
         }
 
         .geometric-pattern {

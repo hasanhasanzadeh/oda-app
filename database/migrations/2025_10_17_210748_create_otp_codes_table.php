@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('otp_codes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('description')->nullable();
-            $table->boolean('status')->default(false);
+            $table->string('phone')->index();
+            $table->string('code', 6);
+            $table->timestamp('expires_at');
+            $table->boolean('verified')->default(false);
+            $table->ipAddress('ip_address')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('otp_codes');
     }
 };

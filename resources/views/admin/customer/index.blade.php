@@ -115,13 +115,15 @@
                     <x-sortable-column column="id" label="{{__('message.row')}}" :sort="$sort" :direction="$direction"/>
                     <x-sortable-column column="last_name" label="{{__('message.customer')}}" :sort="$sort"
                                        :direction="$direction"/>
+                    <x-sortable-column column="national_code" label="{{__('message.national_code')}}" :sort="$sort"
+                                       :direction="$direction"/>
                     <x-sortable-column column="created_at" label="{{__('message.created_at')}}" :sort="$sort"
                                        :direction="$direction"/>
                     <x-sortable-column column="is_active" label="{{__('message.is_active')}}" :sort="$sort"
                                        :direction="$direction"/>
                     <x-sortable-column column="role_type" label="{{__('message.role_type')}}" :sort="$sort"
                                        :direction="$direction"/>
-                    <x-sortable-column column="email_verified_at" label="{{__('message.email_verified_at')}}"
+                    <x-sortable-column column="mobile_verified_at" label="{{__('message.mobile_verified_at')}}"
                                        :sort="$sort" :direction="$direction"/>
                     <th class="px-6 py-3 text-xs font-medium tracking-wider text-right text-gray-500 uppercase dark:text-gray-400">
                         {{__('message.operation')}}
@@ -151,6 +153,9 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900 dark:text-white">{{$customer->national_code}}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900 dark:text-white">{{verta($customer->created_at)->format('d F Y')}}</div>
                             <div class="text-xs text-gray-500 dark:text-gray-400">{{verta($customer->created_at)->format('h:i A')}}</div>
                         </td>
@@ -174,7 +179,7 @@
                                 </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($customer->email_verified_at)
+                            @if($customer->mobile_verified_at)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:bg-opacity-20 dark:text-green-400">
                                 <span class="w-1.5 h-1.5 mr-1.5 bg-green-500 rounded-full"></span>
                                 <span class="px-2">ایمیل تایید شده</span>

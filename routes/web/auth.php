@@ -6,12 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'loginFormShow'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/otp/send', [AuthController::class, 'sendOtp'])->name('otp.send');
+    Route::post('/otp/verify', [AuthController::class, 'verifyOtp'])->name('otp.verify');
 });
 
-Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', [ProfileController::class, 'dashboard'])->name('dashboard');
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-});

@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Base\Trait\HasRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'role_type',
         'email',
         'email_verified_at',
+        'mobile_verified_at',
         'birthday',
         'national_code',
         'password'
@@ -54,6 +56,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'mobile_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
@@ -65,7 +68,7 @@ class User extends Authenticatable
         'national_code' => 'nullable|digits:10|numeric|unique:users,national_code',
         'email' => 'nullable|email|max:255',
         'password' => 'nullable|string|min:4|max:32',
-        'role_type' => 'required|in:admin,student,teacher,staff',
+        'role_type' => 'required|in:admin,user,staff',
         'birthday' => 'nullable|date_format:Y-m-d',
         'is_active'=>'nullable|in:0,1',
         'mobile' => 'required|ir_mobile:zero|string',
@@ -129,5 +132,15 @@ class User extends Authenticatable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'favorites');
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

@@ -32,16 +32,6 @@ readonly class UserService
         return $this->userRepository->update($id, $data);
     }
 
-    public function updateRole()
-    {
-        return $this->userRepository->updateRole();
-    }
-
-    public function updateAvatar(array $data)
-    {
-        return $this->userRepository->updateAvatar($data);
-    }
-
     public function delete($id)
     {
         return $this->userRepository->delete($id);

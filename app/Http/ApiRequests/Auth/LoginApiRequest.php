@@ -27,8 +27,7 @@ class LoginApiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'mobile' => 'required|ir_mobile:zero',
-            'role_type' => 'nullable|in:jobseeker,employer',
+            'phone' => 'required|ir_mobile:zero',
         ];
     }
 

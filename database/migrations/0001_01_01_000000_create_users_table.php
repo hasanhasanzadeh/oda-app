@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('role_type',['user', 'admin','staff'])->default('user');
             $table->string('email',150)->unique()->nullable()->index();
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('mobile_verified_at')->nullable();
             $table->date('birthday')->nullable();
             $table->string('national_code',10)->unique()->nullable()->index();
             $table->string('password');

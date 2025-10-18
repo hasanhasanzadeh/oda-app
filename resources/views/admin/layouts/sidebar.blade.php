@@ -125,7 +125,7 @@
                         </a>
                     </li>
                     <li class="dark:hover:bg-gray-800 hover:bg-gray-300">
-                        <a href="{{route('logout')}}" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-gray-200">
+                        <a href="{{route('user.logout')}}" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group dark:text-gray-200">
                             <i class="fa-solid fa-sign-out"></i>
                             <span class="mr-3" >
                                 {{__('message.logout')}}
