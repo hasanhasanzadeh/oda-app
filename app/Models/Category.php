@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Base\Trait\HasRules;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Category extends Model
@@ -17,26 +15,25 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        'description',
         'parent_id',
-        'order',
         'is_active',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
+        'description',
+        'order',
     ];
 
     protected static array $rules = [
         'name' => 'required|string|min:3|max:255',
         'slug' => 'required|string|min:3|max:255|unique:categories,slug',
-        'description' => 'nullable|string|min:3|max:10000',
         'parent_id' => 'nullable|exists:categories,id',
         'is_active' => 'nullable|in:1,0',
-        'order' => 'nullable|numeric|min:0',
+        'order' => 'nullable|numeric',
         'meta_title' => 'required|string|min:3|max:150',
         'meta_description' => 'required|string|min:3|max:255',
         'meta_keywords' => 'required|string|min:3|max:500',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     /*
@@ -48,21 +45,24 @@ class Category extends Model
     {
         return $this->morphOne(File::class, 'fileable');
     }
-
-    // Relationships
-    public function parent(): BelongsTo
+    public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
 
-    public function children(): HasMany
+    public function children()
     {
         return $this->hasMany(Category::class, 'parent_id')->orderBy('order');
     }
 
-    public function products(): HasMany
+    public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    public function meta(): MorphOne
+    {
+        return $this->morphOne(Meta::class,'metaable');
     }
 
     // Scopes
@@ -74,10 +74,5 @@ class Category extends Model
     public function scopeParent($query)
     {
         return $query->whereNull('parent_id');
-    }
-
-    public function meta(): MorphOne
-    {
-        return $this->morphOne(Meta::class,'metaable');
     }
 }

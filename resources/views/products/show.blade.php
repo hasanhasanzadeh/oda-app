@@ -8,9 +8,9 @@
         <nav class="flex mb-8 text-sm">
             <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-600">خانه</a>
             <span class="mx-2 text-gray-400">/</span>
-            <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-blue-600">محصولات</a>
+            <a href="{{ route('product.index') }}" class="text-gray-600 hover:text-blue-600">محصولات</a>
             <span class="mx-2 text-gray-400">/</span>
-            <a href="{{ route('products.index', ['category' => $product->category->slug]) }}" class="text-gray-600 hover:text-blue-600">
+            <a href="{{ route('product.index', ['category' => $product->category->slug]) }}" class="text-gray-600 hover:text-blue-600">
                 {{ $product->category->name }}
             </a>
             <span class="mx-2 text-gray-400">/</span>
@@ -24,7 +24,7 @@
                 <div class="relative bg-white rounded-lg shadow-lg overflow-hidden group">
                     <div id="main-image-container" class="relative aspect-square overflow-hidden cursor-zoom-in">
                         <img id="main-image"
-                             src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                             src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                              alt="{{ $product->name }}"
                              class="w-full h-full object-contain transition-transform duration-300">
 
@@ -35,14 +35,14 @@
                     <!-- Zoomed Image Display -->
                     <div id="zoom-result" class="absolute inset-0 bg-white hidden overflow-hidden z-10">
                         <img id="zoom-image"
-                             src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                             src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                              alt="{{ $product->name }}"
                              class="absolute">
                     </div>
 
-                    @if($product->sale_price)
+                    @if($product->discount > 0)
                         <div class="absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg z-20">
-                            {{ round((($product->price - $product->sale_price) / $product->price) * 100) }}% تخفیف
+                            {{ $product->discount }}% تخفیف
                         </div>
                     @endif
                 </div>
@@ -76,17 +76,17 @@
 
                 <!-- Price -->
                 <div class="mb-6">
-                    @if($product->sale_price)
+                    @if($product->discount > 0)
                         <div class="flex items-center gap-4 mb-2">
                     <span class="text-2xl font-bold text-blue-600">
-                        {{ number_format($product->sale_price) }} تومان
+                        {{ number_format($product->original_price) }} تومان
                     </span>
                             <span class="text-xl text-gray-400 line-through">
                         {{ number_format($product->price) }} تومان
                     </span>
                         </div>
                         <div class="text-green-600 font-bold">
-                            شما {{ number_format($product->price - $product->sale_price) }} تومان صرفه‌جویی می‌کنید
+                            شما {{ number_format($product->price - $product->original_price) }} تومان صرفه‌جویی می‌کنید
                         </div>
                     @else
                         <div class="text-3xl font-bold text-blue-600">
@@ -283,7 +283,7 @@
                     @foreach($relatedProducts as $relatedProduct)
                         <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
                             <a href="{{ route('products.show', $relatedProduct->slug) }}">
-                                <img src="{{ asset($relatedProduct->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                <img src="{{ asset($relatedProduct->photo->address ?? 'images/placeholder.jpg') }}"
                                      alt="{{ $relatedProduct->name }}"
                                      class="w-full aspect-square object-cover hover:scale-105 transition-transform duration-300">
                             </a>
@@ -293,7 +293,7 @@
                                     {{ $relatedProduct->name }}
                                 </a>
                                 <div class="text-blue-600 font-bold">
-                                    {{ number_format($relatedProduct->sale_price ?? $relatedProduct->price) }} تومان
+                                    {{ number_format($relatedProduct->price) }} تومان
                                 </div>
                             </div>
                         </div>

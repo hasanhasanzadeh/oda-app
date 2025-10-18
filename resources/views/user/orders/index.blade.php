@@ -109,7 +109,7 @@
                                 <i class="fas fa-shopping-bag text-gray-300 text-6xl mb-4"></i>
                                 <h3 class="text-xl font-bold text-gray-700 mb-2">هنوز سفارشی ندارید</h3>
                                 <p class="text-gray-600 mb-6">اولین خرید خود را انجام دهید</p>
-                                <a href="{{ route('products.index') }}"
+                                <a href="{{ route('product.index') }}"
                                    class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transform transition shadow-lg">
                                     شروع خرید
                                 </a>

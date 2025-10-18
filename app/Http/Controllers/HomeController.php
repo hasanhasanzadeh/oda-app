@@ -18,13 +18,12 @@ class HomeController extends Controller
             ->get();
 
         // Get parent categories with products count
-        $categories = Category::whereNull('parent_id')
+        $cats = Category::where('parent_id',0)
             ->where('is_active', true)
             ->withCount('products')
             ->orderBy('order')
             ->take(6)
             ->get();
-
         // Get featured products
         $featuredProducts = Product::with(['photo', 'comments'])
             ->where('is_featured', true)
@@ -41,7 +40,6 @@ class HomeController extends Controller
             ->get();
 
         $setting= Setting::with(['logo','favicon','socialMedia','meta'])->first();
-
-        return view('home', compact(['sliders', 'categories', 'featuredProducts', 'latestProducts','setting']));
+        return view('home', compact(['sliders', 'cats', 'featuredProducts', 'latestProducts','setting']));
     }
 }

@@ -199,7 +199,7 @@
                                                 <h4 class="text-sm font-bold line-clamp-2 mb-1">{{ $item['name'] }}</h4>
                                                 <div class="text-xs text-gray-600">تعداد: {{ $item['quantity'] }}</div>
                                                 <div class="text-sm font-bold text-blue-600">
-                                                    {{ number_format(($item['sale_price'] ?? $item['price']) * $item['quantity']) }} تومان
+                                                    {{ number_format(($item['price']) * $item['quantity']) }} تومان
                                                 </div>
                                             </div>
                                         </div>

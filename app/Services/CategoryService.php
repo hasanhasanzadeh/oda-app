@@ -10,7 +10,7 @@ readonly class CategoryService
     {
     }
 
-    public function all(array $filters=[])
+    public function all(array $filters)
     {
         return $this->categoryRepository->all($filters);
     }

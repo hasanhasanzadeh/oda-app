@@ -13,7 +13,6 @@ use App\Http\Requests\Category\CategoryUpdateFormRequest;
 use App\Http\Requests\Category\CategoryUpdateRequest;
 use App\Models\Category;
 use App\Services\CategoryService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -30,7 +29,7 @@ class CategoryController extends Controller
         $categories = $this->categoryService->all($validated);
         session(['previous_url' => url()->full()]);
         return view('admin.category.index', [
-            'categories'=>$categories,
+            'cats'=>$categories,
             'title'=>$title,
             'sort' => $validated['sort'] ?? 'created_at',
             'direction' => $validated['direction'] ?? 'desc',
@@ -52,7 +51,9 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->parent_id = $parent_id;
-        $category->status = $request->status;
+        $category->is_active = $request->is_active;
+        $category->description = $request->description;
+        $category->order = $request->order;
         $category->slug = Helper::slugMake($request->slug);
         $category->save();
         $category->meta()->create([
@@ -100,8 +101,10 @@ class CategoryController extends Controller
         }
         $category->name = $request->name;
         $category->parent_id = $parent_id;
-        $category->status = $request->status;
+        $category->is_active = $request->is_active;
+        $category->description = $request->description;
         $category->slug = Helper::slugMake($request->slug);;
+        $category->order = $request->order;
         $category->save();
         if ($request->image) {
             if ($category->photo) {

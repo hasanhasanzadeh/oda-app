@@ -23,7 +23,7 @@
                                             <!-- Product Image -->
                                             <a href="{{ route('products.show', $comment->product->slug) }}"
                                                class="flex-shrink-0">
-                                                <img src="{{ asset($comment->product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                                <img src="{{ asset($comment->product->photo->address ?? 'images/placeholder.jpg') }}"
                                                      alt="{{ $comment->product->name }}"
                                                      class="w-full md:w-32 h-32 object-cover rounded-lg">
                                             </a>
@@ -106,7 +106,7 @@
                                 <i class="fas fa-comments text-gray-300 text-6xl mb-4"></i>
                                 <h3 class="text-xl font-bold text-gray-700 mb-2">هنوز نظری ثبت نکرده‌اید</h3>
                                 <p class="text-gray-600 mb-6">با ثبت نظر در مورد محصولات، به دیگران در انتخاب بهتر کمک کنید</p>
-                                <a href="{{ route('products.index') }}"
+                                <a href="{{ route('product.index') }}"
                                    class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transform transition shadow-lg">
                                     مشاهده محصولات
                                 </a>

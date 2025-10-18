@@ -182,12 +182,12 @@
                             @if($customer->mobile_verified_at)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:bg-opacity-20 dark:text-green-400">
                                 <span class="w-1.5 h-1.5 mr-1.5 bg-green-500 rounded-full"></span>
-                                <span class="px-2">ایمیل تایید شده</span>
+                                <span class="px-2">موبایل تایید شده</span>
                             </span>
                             @else
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:bg-opacity-20 dark:text-red-400">
                                 <span class="w-1.5 h-1.5 mr-1.5 bg-red-500 rounded-full"></span>
-                                <span class="px-2">ایمیل تایید نشده</span>
+                                <span class="px-2">موبایل تایید نشده</span>
                             </span>
                             @endif
                         </td>

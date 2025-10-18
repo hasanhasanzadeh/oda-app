@@ -137,14 +137,14 @@
                         <td class="px-6 py-4 whitespace-nowrap">
 
                             <div class="flex items-center space-x-3 space-x-reverse">
-                                <a href="{{route('contents.show',$page->id)}}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" title="{{__('message.show')}}">
+                                <a href="{{route('pages.show',$page->id)}}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300" title="{{__('message.show')}}">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{route('contents.edit',$page->id)}}" class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300" title="{{__('message.edit')}}">
+                                <a href="{{route('pages.edit',$page->id)}}" class="text-yellow-600 hover:text-yellow-900 dark:text-yellow-400 dark:hover:text-yellow-300" title="{{__('message.edit')}}">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <div>
-                                    <form action="{{route('contents.destroy',$page->id)}}" method="post" id="delete-form-{{ $page->id }}">
+                                    <form action="{{route('pages.destroy',$page->id)}}" method="post" id="delete-form-{{ $page->id }}">
                                         @csrf
                                         {{method_field('DELETE')}}
                                         <button type="button" name="delete" onclick="confirmDelete({{ $page->id }})" class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300" title="{{__('message.delete')}}">
@@ -167,7 +167,7 @@
                     نمایش {{ $pages->firstItem() }} تا {{ $pages->lastItem() }} از {{ $pages->total() }} مورد
                 </div>
                 <div class="flex justify-center items-center p-3">
-                    <form method="GET" action="{{ route('contents.index') }}" class="flex flex-wrap justify-center items-center">
+                    <form method="GET" action="{{ route('pages.index') }}" class="flex flex-wrap justify-center items-center">
                         <!-- Preserve existing query parameters -->
                         @if(request()->has('search'))
                             <input type="hidden" name="search" value="{{request('search')}}">

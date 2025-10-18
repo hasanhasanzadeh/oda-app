@@ -26,14 +26,14 @@
                                         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
                                             <div class="relative">
                                                 <a href="{{ route('products.show', $product->slug) }}">
-                                                    <img src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                                    <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                                          alt="{{ $product->name }}"
                                                          class="w-full aspect-square object-cover">
                                                 </a>
 
-                                                @if($product->sale_price)
+                                                @if($product->dicount > 0)
                                                     <div class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                                        {{ round((($product->price - $product->sale_price) / $product->price) * 100) }}% تخفیف
+                                                        {{ $product->discount }}% تخفیف
                                                     </div>
                                                 @endif
 
@@ -69,12 +69,12 @@
 
                                                 <div class="flex items-center justify-between mb-3">
                                                     <div>
-                                                        @if($product->sale_price)
+                                                        @if($product->discount > 0)
                                                             <div class="text-gray-400 line-through text-sm">
                                                                 {{ number_format($product->price) }} تومان
                                                             </div>
                                                             <div class="text-blue-600 font-bold text-lg">
-                                                                {{ number_format($product->sale_price) }} تومان
+                                                                {{ number_format($product->original_price) }} تومان
                                                             </div>
                                                         @else
                                                             <div class="text-blue-600 font-bold text-lg">
@@ -116,7 +116,7 @@
                                 <i class="fas fa-heart-broken text-gray-300 text-6xl mb-4"></i>
                                 <h3 class="text-xl font-bold text-gray-700 mb-2">هنوز محصولی به علاقه‌مندی‌ها اضافه نکرده‌اید</h3>
                                 <p class="text-gray-600 mb-6">محصولات مورد علاقه خود را با کلیک روی آیکون قلب ذخیره کنید</p>
-                                <a href="{{ route('products.index') }}"
+                                <a href="{{ route('product.index') }}"
                                    class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transform transition shadow-lg">
                                     مشاهده محصولات
                                 </a>

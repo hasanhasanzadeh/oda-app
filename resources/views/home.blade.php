@@ -8,7 +8,7 @@
         <div id="slider" class="relative h-[400px] md:h-[500px] lg:h-[600px]">
             @foreach($sliders as $index => $slider)
                 <div class="slider-item absolute inset-0 transition-opacity duration-700 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}"
-                     style="background-image: url('{{ asset($slider->image) }}'); background-size: cover; background-position: center;">
+                     style="background-image: url('{{ asset($slider->photo->address) }}'); background-size: cover; background-position: center;">
                     <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent">
                         <div class="container mx-auto px-4 h-full flex items-center">
                             <div class="max-w-2xl text-white">
@@ -98,7 +98,7 @@
                 <h2 class="text-3xl font-bold text-gray-900">محصولات ویژه</h2>
                 <p class="text-gray-600 mt-2">جدیدترین و پرفروش‌ترین محصولات</p>
             </div>
-            <a href="{{ route('products.index', ['featured' => 1]) }}"
+            <a href="{{ route('product.index', ['featured' => 1]) }}"
                class="text-blue-600 hover:text-blue-700 font-bold flex items-center gap-2">
                 مشاهده همه
                 <i class="fas fa-arrow-left"></i>
@@ -112,12 +112,12 @@
                         <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/4 px-2">
                             <div class="bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                                 <div class="relative overflow-hidden aspect-square">
-                                    <img src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                    <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                          alt="{{ $product->name }}"
                                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                    @if($product->sale_price)
+                                    @if($product->discount > 0)
                                         <div class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                            {{ round((($product->price - $product->sale_price) / $product->price) * 100) }}% تخفیف
+                                            {{ $product->discount }}% تخفیف
                                         </div>
                                     @endif
                                     @auth
@@ -142,12 +142,12 @@
                                     </div>
                                     <div class="flex items-center justify-between">
                                         <div>
-                                            @if($product->sale_price)
+                                            @if($product->discount > 0)
                                                 <div class="text-gray-400 line-through text-sm">
                                                     {{ number_format($product->price) }} تومان
                                                 </div>
                                                 <div class="text-blue-600 font-bold text-lg">
-                                                    {{ number_format($product->sale_price) }} تومان
+                                                    {{ number_format($product->original_price) }} تومان
                                                 </div>
                                             @else
                                                 <div class="text-blue-600 font-bold text-lg">
@@ -180,11 +180,11 @@
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center mb-8">دسته‌بندی محصولات</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                @foreach($categories as $category)
-                    <a href="{{ route('products.index', ['category' => $category->slug]) }}"
+                @foreach($cats as $category)
+                    <a href="{{ route('product.index', ['category' => $category->slug]) }}"
                        class="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
-                        @if($category->image)
-                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}"
+                        @if($category->photo)
+                            <img src="{{ asset($category->photo->address) }}" alt="{{ $category->name }}"
                                  class="w-20 h-20 mx-auto mb-4 object-contain group-hover:scale-110 transition-transform">
                         @else
                             <div class="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-3xl text-blue-600">
@@ -207,7 +207,7 @@
             @foreach($latestProducts as $product)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
                     <a href="{{ route('products.show', $product->slug) }}">
-                        <img src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                        <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                              alt="{{ $product->name }}"
                              class="w-full aspect-square object-cover hover:scale-105 transition-transform duration-300">
                     </a>
@@ -217,7 +217,7 @@
                             {{ $product->name }}
                         </a>
                         <div class="mt-2 text-blue-600 font-bold">
-                            {{ number_format($product->sale_price ?? $product->price) }} تومان
+                            {{ number_format( $product->price) }} تومان
                         </div>
                     </div>
                 </div>

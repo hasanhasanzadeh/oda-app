@@ -87,7 +87,7 @@
                             <div class="space-y-4">
                                 @foreach($order->items as $item)
                                     <div class="flex gap-4 pb-4 border-b last:border-b-0">
-                                        <img src="{{ asset($item->product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                        <img src="{{ asset($item->product->photo->address ?? 'images/placeholder.jpg') }}"
                                              alt="{{ $item->product_name }}"
                                              class="w-20 h-20 object-cover rounded-lg">
                                         <div class="flex-1">

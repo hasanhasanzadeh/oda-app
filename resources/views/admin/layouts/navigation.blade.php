@@ -85,7 +85,7 @@
             @endcan
                 @can('page-all')
                     <a href="{{route('pages.index')}}" class="flex items-center px-4 py-3 text-sm text-gray-700 transition-colors rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
-                        <i class="ml-3 text-lg text-gray-500 dark:text-gray-400 fa-solid fa-page4"></i>
+                        <i class="ml-3 text-lg text-gray-500 dark:text-gray-400 fa-solid fa-file"></i>
                         <span>{{__('message.pages')}}</span>
                     </a>
                 @endcan

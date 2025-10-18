@@ -4,7 +4,6 @@ namespace App\Repositories;
 use App\Helpers\Helper;
 use App\Models\Category;
 use App\Repositories\Interfaces\CategoryRepositoryInterface;
-use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CategoryRepository implements CategoryRepositoryInterface
@@ -20,23 +19,26 @@ class CategoryRepository implements CategoryRepositoryInterface
             $perPage = 10;
         }
 
-        $allowedColumns = ['id','name', 'created_at'];
+        $allowedColumns = ['id','name', 'is_active', 'created_at'];
         if (!in_array($column, $allowedColumns)) {
             $column = 'created_at';
         }
-        $categories = Category::query();
+        $data = Category::query();
 
         if ($keyword = request('search')) {
-            $categories->where('name', 'LIKE', "%{$keyword}%");
+            $data->where('name', 'LIKE', "%{$keyword}%");
+        }
+        if ($status = request('is_active')) {
+            $data->where('is_active', 'LIKE', "%{$status}%");
         }
         if (!empty($filters['from_date']) || !empty($filters['to_date'])) {
             $from_date = $filters['from_date'] ?? null;
             $to_date = $filters['to_date'] ?? null;
 
-            $categories = $categories->when($from_date, fn($q) => $q->whereDate('created_at', '>=', $from_date))
+            $data = $data->when($from_date, fn($q) => $q->whereDate('created_at', '>=', $from_date))
                 ->when($to_date, fn($q) => $q->whereDate('created_at', '<=', $to_date));
         }
-        return $categories->with(['photo','children'])->orderBy($column, $direction === 'asc' ? 'asc' : 'desc')->paginate($perPage);
+        return $data->with(['photo','children'])->orderBy('order')->orderBy($column, $direction === 'asc' ? 'asc' : 'desc')->paginate($perPage);
     }
 
     public function find($id)

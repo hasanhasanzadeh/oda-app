@@ -99,7 +99,7 @@
                     <x-sortable-column column="id" label="{{__('message.row')}}" :sort="$sort" :direction="$direction"/>
                     <x-sortable-column column="name" label="{{__('message.name')}}" :sort="$sort"
                                        :direction="$direction"/>
-                    <x-sortable-column column="status" label="{{__('message.status')}}" :sort="$sort"
+                    <x-sortable-column column="is_active" label="{{__('message.status')}}" :sort="$sort"
                                        :direction="$direction"/>
                     <x-sortable-column column="created_at" label="{{__('message.created_at')}}" :sort="$sort"
                                        :direction="$direction"/>
@@ -110,14 +110,14 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
 
-                @foreach($categories as $index=>$category)
+                @foreach($cats as $index=>$category)
                     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 hover:cursor-pointer">
                         <td class="px-6 py-4 whitespace-nowrap">
                             <input type="checkbox" name="category_{{$category->id}}"
                                    class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600">
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="mr-2 font-medium text-gray-900 dark:text-white">{{ $categories->firstItem() + $index }}</span>
+                            <span class="mr-2 font-medium text-gray-900 dark:text-white">{{ $cats->firstItem() + $index }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex items-center">
@@ -131,7 +131,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @if($category->status)
+                            @if($category->is_active)
                                 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:bg-opacity-20 dark:text-blue-400">
                                 <span class="w-1.5 h-1.5 mr-1.5 bg-blue-500 rounded-full"></span>
                                 <span class="px-2">{{__('message.active')}}</span>
@@ -184,7 +184,7 @@
             <!-- Pagination count text -->
             <div class="flex items-center justify-start w-full md:w-auto mb-4 md:mb-0 text-sm text-gray-600 dark:text-gray-400">
                 <div>
-                    نمایش {{ $categories->firstItem() }} تا {{ $categories->lastItem() }} از {{ $categories->total() }}
+                    نمایش {{ $cats->firstItem() }} تا {{ $cats->lastItem() }} از {{ $cats->total() }}
                     مورد
                 </div>
                 <div class="flex justify-center items-center p-3">
@@ -225,8 +225,8 @@
             <!-- Pagination links -->
             <div class="flex items-center space-x-1 space-x-reverse">
                 <!-- Previous Page Link -->
-                <a href="{{ $categories->appends(Request::except('page'))->previousPageUrl() }}"
-                   class="{{ $categories->onFirstPage() ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100' }} px-3 py-2 rounded-md">
+                <a href="{{ $cats->appends(Request::except('page'))->previousPageUrl() }}"
+                   class="{{ $cats->onFirstPage() ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100' }} px-3 py-2 rounded-md">
                     <span class="sr-only">قبلی</span>
                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -237,8 +237,8 @@
 
                 <!-- Compact Page Numbers (Always showing 4 pages max) -->
                 @php
-                    $currentPage = $categories->currentPage();
-                    $lastPage = $categories->lastPage();
+                    $currentPage = $cats->currentPage();
+                    $lastPage = $cats->lastPage();
 
                     // Calculate which pages to show (at most 4)
                     $startPage = max($currentPage - 1, 1);
@@ -252,7 +252,7 @@
 
                         <!-- First Page Link if not in range -->
                 @if ($startPage > 1)
-                    <a href="{{ $categories->appends(Request::except('page'))->url(1) }}"
+                    <a href="{{ $cats->appends(Request::except('page'))->url(1) }}"
                        class="px-3 py-2 text-gray-600 bg-white hover:bg-gray-100 rounded-md">
                         1
                     </a>
@@ -263,7 +263,7 @@
 
                 <!-- Middle Pages -->
                 @foreach (range($startPage, $endPage) as $page)
-                    <a href="{{ $categories->appends(Request::except('page'))->url($page) }}"
+                    <a href="{{ $cats->appends(Request::except('page'))->url($page) }}"
                        class="{{ $page == $currentPage ? 'bg-blue-600 text-white' : 'text-gray-600 hover:bg-gray-100' }} px-3 py-2 rounded-md">
                         {{ $page }}
                     </a>
@@ -274,15 +274,15 @@
                     @if ($endPage < $lastPage - 1)
                         <span class="px-2 py-2 text-gray-600">...</span>
                     @endif
-                    <a href="{{ $categories->appends(Request::except('page'))->url($lastPage) }}"
+                    <a href="{{ $cats->appends(Request::except('page'))->url($lastPage) }}"
                        class="px-3 py-2 text-gray-600 bg-white hover:bg-gray-100 rounded-md">
                         {{ $lastPage }}
                     </a>
                 @endif
 
                 <!-- Next Page Link -->
-                <a href="{{ $categories->appends(Request::except('page'))->nextPageUrl() }}"
-                   class="{{ !$categories->hasMorePages() ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100' }} px-3 py-2 rounded-md">
+                <a href="{{ $cats->appends(Request::except('page'))->nextPageUrl() }}"
+                   class="{{ !$cats->hasMorePages() ? 'text-gray-400 cursor-not-allowed' : 'text-gray-600 hover:bg-gray-100' }} px-3 py-2 rounded-md">
                     <span class="sr-only">بعدی</span>
                     <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"

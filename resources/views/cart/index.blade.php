@@ -43,12 +43,12 @@
 
                                         <div class="flex items-center gap-4">
                                             <div class="text-left">
-                                                @if(isset($item['sale_price']))
+                                                @if(isset($item['discount']) && $item['discount'] > 0)
                                                     <div class="text-sm text-gray-400 line-through">
                                                         {{ number_format($item['price']) }} تومان
                                                     </div>
                                                     <div class="text-lg font-bold text-blue-600">
-                                                        {{ number_format($item['sale_price'] * $item['quantity']) }} تومان
+                                                        {{ number_format($item['original_price'] * $item['quantity']) }} تومان
                                                     </div>
                                                 @else
                                                     <div class="text-lg font-bold text-blue-600">
@@ -138,7 +138,7 @@
                                 </a>
                             @endauth
 
-                            <a href="{{ route('products.index') }}"
+                            <a href="{{ route('product.index') }}"
                                class="block w-full text-center border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-bold hover:bg-gray-50 transition">
                                 <i class="fas fa-shopping-bag ml-2"></i>
                                 بازگشت به فروشگاه
@@ -168,7 +168,7 @@
                     <i class="fas fa-shopping-cart text-gray-300 text-6xl mb-6"></i>
                     <h2 class="text-2xl font-bold text-gray-700 mb-4">سبد خرید شما خالی است</h2>
                     <p class="text-gray-600 mb-8">برای افزودن محصول به سبد خرید، به صفحه محصولات بروید</p>
-                    <a href="{{ route('products.index') }}"
+                    <a href="{{ route('product.index') }}"
                        class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-lg font-bold hover:scale-105 transform transition shadow-lg">
                         <i class="fas fa-shopping-bag ml-2"></i>
                         مشاهده محصولات

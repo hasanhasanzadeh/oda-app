@@ -10,11 +10,15 @@
                 <aside class="lg:w-64">
                     <div class="bg-white rounded-lg shadow-md p-6 sticky top-24">
                         <div class="text-center mb-6 pb-6 border-b">
-                            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3">
-                                {{ substr(auth()->user()->name, 0, 1) }}
-                            </div>
-                            <h3 class="font-bold text-lg">{{ auth()->user()->name }}</h3>
-                            <p class="text-sm text-gray-600">{{ auth()->user()->email }}</p>
+                            @if(auth()->user()->avatar)
+                                <img src="{{auth()->user()->avatar->address}}" alt="{{ auth()->user()->full_name }}" class="w-24 h-24 bg-gradient-to-br object-contain rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3 shadow-md">
+                            @else
+                                <div class="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-3xl font-bold mx-auto mb-3">
+                                    {{ substr(auth()->user()->full_name, 0, 1) }}
+                                </div>
+                            @endif
+                            <h3 class="font-bold text-lg">{{ auth()->user()->full_name }}</h3>
+                            <p class="text-sm text-gray-600">{{ auth()->user()->mobile }}</p>
                         </div>
 
                         <nav class="space-y-1">
@@ -23,6 +27,13 @@
                                 <i class="fas fa-th-large w-5"></i>
                                 <span>داشبورد</span>
                             </a>
+                            @if(auth()->user()->roles)
+                                <a href="{{ route('admin.dashboard') }}"
+                                   class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+                                    <i class="fas fa-dashboard w-5"></i>
+                                    <span>پنل مدیریت</span>
+                                </a>
+                            @endif
                             <a href="{{ route('user.orders') }}"
                                class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('user.orders*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
                                 <i class="fas fa-shopping-bag w-5"></i>
@@ -201,7 +212,7 @@
                                     @foreach($favoriteProducts->take(4) as $product)
                                         <div class="border rounded-lg overflow-hidden hover:shadow-lg transition">
                                             <a href="{{ route('products.show', $product->slug) }}">
-                                                <img src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                                <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                                      alt="{{ $product->name }}"
                                                      class="w-full aspect-square object-cover">
                                             </a>
@@ -211,7 +222,7 @@
                                                     {{ $product->name }}
                                                 </a>
                                                 <div class="text-blue-600 font-bold">
-                                                    {{ number_format($product->sale_price ?? $product->price) }} تومان
+                                                    {{ number_format( $product->price) }} تومان
                                                 </div>
                                             </div>
                                         </div>

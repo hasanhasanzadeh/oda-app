@@ -49,7 +49,7 @@
                             {{ __('message.slug') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
-                            <input type="text" id="slug" name="slug" value="{{ old('slug', $blog->slug) }}"
+                            <input type="text" id="slug" name="slug" value="{{ old('slug', $page->slug) }}"
                                    placeholder="ایجاد خودکار نامک"
                                    class="w-full px-10 py-3 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500"
                                    required>

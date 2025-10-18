@@ -13,8 +13,8 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with(['primaryImage', 'comments', 'category'])
-            ->where('is_active', true);
+        $query = Product::with(['photo', 'comments', 'category'])
+            ->whereIn('status', ['active', 'soon']);
 
         // Search
         if ($request->has('search') && $request->search) {
@@ -76,7 +76,7 @@ class ProductController extends Controller
         $products = $query->paginate(12);
 
         // Get all categories for filter
-        $categories = Category::withCount('products')
+        $cats = Category::withCount('products')
             ->where('is_active', true)
             ->orderBy('order')
             ->get();
@@ -89,24 +89,24 @@ class ProductController extends Controller
 
         $setting= Setting::with(['logo','favicon','socialMedia','meta'])->first();
 
-        return view('products.index', compact(['products', 'categories', 'brands','setting']));
+        return view('products.index', compact(['products', 'cats', 'brands','setting']));
     }
 
     public function show($slug)
     {
         $product = Product::with(['images', 'category', 'comments.user'])
             ->where('slug', $slug)
-            ->where('is_active', true)
+            ->whereIn('status', ['active', 'soon'])
             ->firstOrFail();
 
         // Increment views
         $product->increment('views');
 
         // Get related products
-        $relatedProducts = Product::with(['primaryImage'])
+        $relatedProducts = Product::with(['photo'])
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
-            ->where('is_active', true)
+            ->whereIn('status', ['active', 'soon'])
             ->inRandomOrder()
             ->take(4)
             ->get();

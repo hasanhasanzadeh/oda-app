@@ -53,14 +53,14 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    <!-- Slug Field -->
+
                     <div class="space-y-2">
                         <label for="slug" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
                             {{ __('message.slug') }} <span class="text-red-500">*</span>
                         </label>
                         <div class="relative">
                             <input type="text" id="slug" name="slug" value="{{ old('slug', $category->slug) }}"
-                                   placeholder="ایجاد خودکار نامک"
+                                   placeholder="ایجاد نامک خودکار"
                                    class="w-full px-10 py-3 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500"
                                    required>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3">
@@ -73,7 +73,39 @@
                         <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-
+                    <div class="space-y-2">
+                        <label for="order" class="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+                            {{ __('message.order') }} <span class="text-red-500"></span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" id="order" name="order" value="{{ old('order', $category->order) }}"
+                                   placeholder="ترتیب را وارد کنید"
+                                   class="w-full px-10 py-3 border border-gray-200 dark:border-gray-600 rounded-xl shadow-sm placeholder-gray-400 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 hover:border-gray-300 dark:hover:border-gray-500"
+                                   required>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                <i class="fa-solid fa-arrow-up-wide-short text-gray-400"></i>
+                            </div>
+                        </div>
+                        @error('order')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="mt-6 space-y-6">
+                        <div>
+                            <label for="description"
+                                   class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                {{ __('message.description') }}
+                            </label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                rows="7"
+                                placeholder="{{ __('message.description') }}"
+                                class="appearance-none block w-full bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none"
+                                required
+                            >{{ $category->description }}</textarea>
+                        </div>
+                    </div>
                     <div class="space-y-2">
                         <div class="m-4">
                             <x-search-select
@@ -97,17 +129,17 @@
                     </div>
 
                     <div>
-                        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        <label for="is_active" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                             {{ __('message.status') }}
                         </label>
                         <select
-                                id="status"
-                                name="status"
+                                id="is_active"
+                                name="is_active"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:border-blue-500"
                         >
-                            <option value="1" @if($category->status) selected @endif>{{ __('message.active') }}</option>
+                            <option value="1" @if($category->is_active) selected @endif>{{ __('message.active') }}</option>
                             <option value="0"
-                                    @if(!$category->status) selected @endif>{{ __('message.unactive') }}</option>
+                                    @if(!$category->is_active) selected @endif>{{ __('message.unactive') }}</option>
                         </select>
                     </div>
                     <!-- Image Upload -->

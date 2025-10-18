@@ -18,6 +18,13 @@
                 <i class="fas fa-th-large w-5"></i>
                 <span>داشبورد</span>
             </a>
+            @if(auth()->user()->roles)
+                <a href="{{ route('admin.dashboard') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('user.dashboard') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
+                    <i class="fas fa-dashboard w-5"></i>
+                    <span>پنل مدیریت</span>
+                </a>
+            @endif
             <a href="{{ route('user.orders') }}"
                class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('user.orders*') ? 'bg-blue-50 text-blue-600 font-bold' : 'text-gray-700 hover:bg-gray-50' }} transition">
                 <i class="fas fa-shopping-bag w-5"></i>

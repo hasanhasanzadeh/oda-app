@@ -20,9 +20,9 @@ Route::post('/ckeditor-upload', [CkeditorUploadController::class, 'upload'])->na
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
-Route::post('/products/{product}/comment', [ProductController::class, 'comment'])
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+Route::get('/product/{slug}', [ProductController::class, 'show'])->name('product.show');
+Route::post('/product/{product}/comment', [ProductController::class, 'comment'])
     ->middleware('auth')
     ->name('products.comment');
 

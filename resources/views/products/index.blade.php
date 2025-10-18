@@ -12,13 +12,13 @@
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="text-xl font-bold">فیلترها</h2>
                             @if(request()->hasAny(['category', 'min_price', 'max_price', 'brand', 'sort']))
-                                <a href="{{ route('products.index') }}" class="text-sm text-blue-600 hover:text-blue-700">
+                                <a href="{{ route('product.index') }}" class="text-sm text-blue-600 hover:text-blue-700">
                                     پاک کردن همه
                                 </a>
                             @endif
                         </div>
 
-                        <form method="GET" action="{{ route('products.index') }}" id="filter-form">
+                        <form method="GET" action="{{ route('product.index') }}" id="filter-form">
                             <!-- Search in current results -->
                             <div class="mb-6">
                                 <label class="block font-bold mb-2 text-sm">جستجو</label>
@@ -128,19 +128,19 @@
                                 <label class="text-sm text-gray-700">مرتب‌سازی:</label>
                                 <select name="sort" onchange="window.location.href=this.value"
                                         class="px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none text-sm">
-                                    <option value="{{ route('products.index', array_merge(request()->except('sort'), ['sort' => 'newest'])) }}"
+                                    <option value="{{ route('product.index', array_merge(request()->except('sort'), ['sort' => 'newest'])) }}"
                                         {{ request('sort') == 'newest' || !request('sort') ? 'selected' : '' }}>
                                         جدیدترین
                                     </option>
-                                    <option value="{{ route('products.index', array_merge(request()->except('sort'), ['sort' => 'popular'])) }}"
+                                    <option value="{{ route('product.index', array_merge(request()->except('sort'), ['sort' => 'popular'])) }}"
                                         {{ request('sort') == 'popular' ? 'selected' : '' }}>
                                         محبوب‌ترین
                                     </option>
-                                    <option value="{{ route('products.index', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}"
+                                    <option value="{{ route('product.index', array_merge(request()->except('sort'), ['sort' => 'price_asc'])) }}"
                                         {{ request('sort') == 'price_asc' ? 'selected' : '' }}>
                                         ارزان‌ترین
                                     </option>
-                                    <option value="{{ route('products.index', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}"
+                                    <option value="{{ route('product.index', array_merge(request()->except('sort'), ['sort' => 'price_desc'])) }}"
                                         {{ request('sort') == 'price_desc' ? 'selected' : '' }}>
                                         گران‌ترین
                                     </option>
@@ -165,7 +165,7 @@
                                 <span class="text-sm text-gray-600">فیلترهای فعال:</span>
 
                                 @if(request('category'))
-                                    <a href="{{ route('products.index', request()->except('category')) }}"
+                                    <a href="{{ route('product.index', request()->except('category')) }}"
                                        class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition">
                                         {{ $categories->where('slug', request('category'))->first()->name ?? request('category') }}
                                         <i class="fas fa-times"></i>
@@ -173,7 +173,7 @@
                                 @endif
 
                                 @if(request('search'))
-                                    <a href="{{ route('products.index', request()->except('search')) }}"
+                                    <a href="{{ route('product.index', request()->except('search')) }}"
                                        class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition">
                                         جستجو: {{ request('search') }}
                                         <i class="fas fa-times"></i>
@@ -181,7 +181,7 @@
                                 @endif
 
                                 @if(request('min_price') || request('max_price'))
-                                    <a href="{{ route('products.index', request()->except(['min_price', 'max_price'])) }}"
+                                    <a href="{{ route('product.index', request()->except(['min_price', 'max_price'])) }}"
                                        class="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition">
                                         قیمت: {{ number_format(request('min_price')) }} - {{ number_format(request('max_price')) }}
                                         <i class="fas fa-times"></i>
@@ -197,14 +197,14 @@
                             <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                                 <div class="relative overflow-hidden aspect-square">
                                     <a href="{{ route('products.show', $product->slug) }}">
-                                        <img src="{{ asset($product->primaryImage->image ?? 'images/placeholder.jpg') }}"
+                                        <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                              alt="{{ $product->name }}"
                                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                     </a>
 
-                                    @if($product->sale_price)
+                                    @if($product->disocunt > 0)
                                         <div class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                            {{ round((($product->price - $product->sale_price) / $product->price) * 100) }}%
+                                            {{ $product->discount }}%
                                         </div>
                                     @endif
 
@@ -242,12 +242,12 @@
 
                                     <div class="flex items-center justify-between mb-3">
                                         <div>
-                                            @if($product->sale_price)
+                                            @if($product->discount > 0)
                                                 <div class="text-gray-400 line-through text-sm">
                                                     {{ number_format($product->price) }} تومان
                                                 </div>
                                                 <div class="text-blue-600 font-bold text-lg">
-                                                    {{ number_format($product->sale_price) }} تومان
+                                                    {{ number_format($product->original_price) }} تومان
                                                 </div>
                                             @else
                                                 <div class="text-blue-600 font-bold text-lg">
@@ -274,7 +274,7 @@
                                 <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
                                 <h3 class="text-2xl font-bold text-gray-700 mb-2">محصولی یافت نشد</h3>
                                 <p class="text-gray-600 mb-6">متاسفانه محصولی با این فیلترها پیدا نشد</p>
-                                <a href="{{ route('products.index') }}"
+                                <a href="{{ route('product.index') }}"
                                    class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">
                                     مشاهده همه محصولات
                                 </a>

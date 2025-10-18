@@ -130,7 +130,14 @@
                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-600 shadow-sm transition-colors duration-200"
                                    placeholder="{{ __('message.address') }}">
                         </div>
-
+                        <div class="space-y-2">
+                            <label for="script_text" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {{ __('message.script_text') }}
+                            </label>
+                            <textarea id="script_text" name="script_text" rows="3"
+                                      class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-600 shadow-sm transition-colors duration-200"
+                                      placeholder="{{ __('message.script_text') }}">{{ $panel->script_text }}</textarea>
+                        </div>
                         <!-- Copyright Field -->
                         <div class="space-y-2">
                             <label for="copy_right" class="block text-sm font-medium text-gray-700 dark:text-gray-300">

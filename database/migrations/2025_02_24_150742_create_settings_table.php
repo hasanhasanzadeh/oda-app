@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('support_text')->nullable();
+            $table->text('script_text')->nullable();
 
             $table->unsignedBigInteger('logo_id')->nullable();
             $table->unsignedBigInteger('favicon_id')->nullable();

@@ -24,7 +24,7 @@
             <div class="relative">
                 <div class="p-6 sm:px-6 sm:py-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-700 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700">
                     <div class="flex flex-col sm:flex-row sm:items-center">
-                        <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                        <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4 p-2 m-2">
                             @if($category->photo != null)
                                 <img
                                         src="{{ $category->photo->address }}"
@@ -43,14 +43,17 @@
                         </div>
                         <div>
                             <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">
-                                {{ $category->name }}
+                               نام دسته : {{ $category->name }}
                             </h2>
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                {{ $category->slug }}
+                                نامک :{{ $category->slug }}
+                            </p>
+                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                ترتیب : {{ $category->order }}
                             </p>
                             <div class="mt-2">
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                ID: {{ $category->id }}
+                                 شناسه : {{ $category->id }}
                             </span>
 
                                 @if(isset($category->parent))
@@ -105,7 +108,6 @@
                         </dd>
                     </div>
 
-                    <!-- Parent Category (if exists) -->
                     @if(isset($category->parent))
                         <div class="grid grid-cols-1 md:grid-cols-4 py-3 border-b border-gray-100 dark:border-gray-700">
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
@@ -119,8 +121,26 @@
                             </dd>
                         </div>
                     @endif
-
-                    <!-- Child Categories (if any) -->
+                    @if(isset($category->order))
+                        <div class="grid grid-cols-1 md:grid-cols-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                ترتیب
+                            </dt>
+                            <dd class="mt-1 md:mt-0 md:col-span-3 text-sm text-gray-900 dark:text-gray-200">
+                                {{$category->order}}
+                            </dd>
+                        </div>
+                    @endif
+                    @if(isset($category->description))
+                        <div class="grid grid-cols-1 md:grid-cols-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+                                {{ __('message.description') }}
+                            </dt>
+                            <dd class="mt-1 md:mt-0 md:col-span-3 text-sm text-gray-900 dark:text-gray-200">
+                                {{$category->description}}
+                            </dd>
+                        </div>
+                    @endif
                     @if(isset($category->children) && count($category->children) > 0)
                         <div class="grid grid-cols-1 md:grid-cols-4 py-3 border-b border-gray-100 dark:border-gray-700">
                             <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">

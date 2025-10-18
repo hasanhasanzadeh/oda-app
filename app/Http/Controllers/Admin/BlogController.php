@@ -36,8 +36,8 @@ class BlogController extends Controller
             'blogs' => $blogs,
             'sort' => $validated['sort'] ?? 'created_at',
             'direction' => $validated['direction'] ?? 'desc',
-            'perBlog' => $validated['per_page'] ?? 10,
-            'allowedPerBlog' => [10, 25, 50, 100]
+            'perPage' => $validated['per_page'] ?? 10,
+            'allowedPerPage' => [10, 25, 50, 100]
         ]);
     }
 

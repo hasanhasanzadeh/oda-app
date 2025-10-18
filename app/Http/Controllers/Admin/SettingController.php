@@ -66,6 +66,7 @@ class SettingController extends Controller
         $setting->address = $request->address;
         $setting->phone = $request->phone;
         $setting->description = $request->description;
+        $setting->script_text = $request->script_text;
         $setting->tel = $request->tel;
         $setting->email = $request->email;
         if ($request->file('favicon')) {
@@ -116,6 +117,7 @@ class SettingController extends Controller
         $setting->copy_right = $request->copy_right;
         $setting->address = $request->address;
         $setting->description = $request->description;
+        $setting->script_text = $request->script_text;
         $setting->phone = $request->phone;
         $setting->tel = $request->tel;
         $setting->email = $request->email;

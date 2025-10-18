@@ -22,7 +22,7 @@ class CheckoutController extends Controller
 
         $subtotal = 0;
         foreach ($cart as $item) {
-            $price = $item['sale_price'] ?? $item['price'];
+            $price = $item['price'];
             $subtotal += $price * $item['quantity'];
         }
 
@@ -56,7 +56,7 @@ class CheckoutController extends Controller
         // Calculate totals
         $subtotal = 0;
         foreach ($cart as $item) {
-            $price = $item['sale_price'] ?? $item['price'];
+            $price = $item['price'];
             $subtotal += $price * $item['quantity'];
         }
 
@@ -93,8 +93,8 @@ class CheckoutController extends Controller
                 'product_id' => $productId,
                 'product_name' => $item['name'],
                 'quantity' => $item['quantity'],
-                'price' => $item['sale_price'] ?? $item['price'],
-                'total' => ($item['sale_price'] ?? $item['price']) * $item['quantity'],
+                'price' => $item['price'],
+                'total' => $item['price'] * $item['quantity'],
             ]);
         }
 

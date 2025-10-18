@@ -38,12 +38,10 @@
                         <a href="{{ route('user.dashboard') }}" class="hover:text-blue-200 transition">
                             <i class="fas fa-user ml-1"></i> پنل کاربری
                         </a>
-                        <form action="{{route('user.logout')}}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="hover:text-blue-200 transition">
-                                <i class="fas fa-sign-out-alt ml-1"></i> خروج
-                            </button>
-                        </form>
+                        <a href="{{route('user.logout')}}" class="hover:text-blue-200 transition">
+                            <i class="fas fa-sign-out-alt ml-1"></i>
+                            <span>خروج</span>
+                        </a>
                     @else
                         <a href="{{ route('login') }}" class="hover:text-blue-200 transition">
                             <i class="fas fa-sign-in-alt ml-1"></i>
@@ -112,27 +110,7 @@
                 <a href="{{ route('home') }}" class="px-4 py-3 hover:bg-white hover:text-blue-600 transition rounded-t-lg">
                     <i class="fas fa-home ml-1"></i> خانه
                 </a>
-                @foreach($categories ?? [] as $category)
-                    <div class="relative group">
-                        <a href="{{ route('products.index', ['category' => $category->slug]) }}"
-                           class="px-4 py-3 hover:bg-white hover:text-blue-600 transition rounded-t-lg flex items-center gap-2">
-                            {{ $category->name }}
-                            @if($category->children->count() > 0)
-                                <i class="fas fa-chevron-down text-xs"></i>
-                            @endif
-                        </a>
-                        @if($category->children->count() > 0)
-                            <div class="absolute right-0 top-full hidden group-hover:block bg-white shadow-lg rounded-b-lg min-w-[200px] py-2 z-50">
-                                @foreach($category->children as $child)
-                                    <a href="{{ route('products.index', ['category' => $child->slug]) }}"
-                                       class="block px-4 py-2 hover:bg-blue-50 hover:text-blue-600 transition">
-                                        {{ $child->name }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
+                @include('layouts.cats')
                 <a href="{{ route('about') }}" class="px-4 py-3 hover:bg-white hover:text-blue-600 transition rounded-t-lg">
                     درباره ما
                 </a>
@@ -142,29 +120,7 @@
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden lg:hidden py-4">
-                <a href="{{ route('home') }}" class="block px-4 py-2 hover:bg-white rounded">خانه</a>
-                @foreach($categories ?? [] as $category)
-                    <div>
-                        <a href="{{ route('products.index', ['category' => $category->slug]) }}"
-                           class="block px-4 py-2 hover:bg-white rounded">
-                            {{ $category->name }}
-                        </a>
-                        @if($category->children->count() > 0)
-                            <div class="pr-4">
-                                @foreach($category->children as $child)
-                                    <a href="{{ route('products.index', ['category' => $child->slug]) }}"
-                                       class="block px-4 py-2 text-sm hover:bg-white rounded">
-                                        {{ $child->name }}
-                                    </a>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
-                <a href="{{ route('about') }}" class="block px-4 py-2 hover:bg-white rounded">درباره ما</a>
-                <a href="{{ route('contact') }}" class="block px-4 py-2 hover:bg-white rounded">تماس با ما</a>
-            </div>
+            @include('layouts.cat_mobile')
         </div>
     </nav>
 </header>
@@ -261,7 +217,7 @@
         </div>
     </div>
 </footer>
-
+{!! $setting->script_text !!}
 <script src="{{asset('/js/jquery.min.js')}}"></script>
 <script src="{{asset('/js/app.bundle.js')}}"></script>
 <script src="{{asset('/js/buttons.js')}}"></script>

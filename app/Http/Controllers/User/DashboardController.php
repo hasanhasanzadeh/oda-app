@@ -28,7 +28,7 @@ public function __construct(private readonly UserService $userService)
         $totalSpent = $user->orders()->where('payment_status', 'paid')->sum('total');
 
         $recentOrders = $user->orders()->latest()->take(5)->get();
-        $favoriteProducts = $user->favorites()->with('primaryImage')->take(4)->get();
+        $favoriteProducts = $user->favorites()->with('photo')->take(4)->get();
 
         $setting= Setting::with(['logo','favicon','socialMedia','meta'])->first();
 
@@ -59,7 +59,7 @@ public function __construct(private readonly UserService $userService)
         }
         $setting= Setting::with(['logo','favicon','socialMedia','meta'])->first();
 
-        $order->load('items.product.primaryImage');
+        $order->load('items.product.photo');
         return view('user.orders.show', compact(['order','setting']));
     }
 

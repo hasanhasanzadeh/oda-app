@@ -147,6 +147,26 @@
                             <!-- Content -->
                             <div class="p-8">
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    <div class="space-y-2">
+                                        <label for="mobile" class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">
+                                            موبایل  <span class="text-red-500">*</span>
+                                        </label>
+                                        <div class="relative">
+                                            <input type="text"
+                                                   id="mobile"
+                                                   name="mobile"
+                                                   value="{{ old('mobile', $customer->mobile) }}"
+                                                   class="w-full px-4 py-4 bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 @error('first_name') border-red-300 ring-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                                                   placeholder="موبایل "
+                                                   required>
+                                            <div class="absolute left-4 top-4">
+                                                <i class="fa fa-mobile dark:text-gray-200"></i>
+                                            </div>
+                                        </div>
+                                        @error('mobile')
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                     <!-- First Name Persian -->
                                     <div class="space-y-2">
                                         <label for="first_name" class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">
@@ -198,7 +218,7 @@
                                         <div class="relative">
                                             <select id="gender"
                                                     name="gender"
-                                                    class="w-full px-4 py-4 bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 @error('gender') border-red-300 ring-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                                                    class="w-full px-8 py-4 bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 @error('gender') border-red-300 ring-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
                                                     required>
                                                 <option value="">انتخاب جنسیت</option>
                                                 <option value="male" {{ old('gender', $customer->gender) == 'male' ? 'selected' : '' }}>مرد</option>
@@ -246,7 +266,31 @@
                                         <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                                         @enderror
                                     </div>
-
+                                    <div class="space-y-2">
+                                        <label for="role_type" class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">
+                                            نوع نقش <span class="text-red-500">*</span>
+                                        </label>
+                                        <div class="relative">
+                                            <select id="role_type"
+                                                    name="role_type"
+                                                    @change="updateProgress()"
+                                                    class="w-full px-8 py-4 bg-slate-50 dark:bg-slate-700/50 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-slate-900 dark:text-white focus:border-indigo-500 dark:focus:border-indigo-400 focus:ring-4 focus:ring-indigo-500/20 transition-all duration-300 @error('gender') border-red-300 ring-red-500 focus:ring-red-500 focus:border-red-500 @enderror"
+                                                    required>
+                                                <option value="">انتخاب نوع نقش</option>
+                                                <option value="user" @if ($customer->role_type == 'user') selected @endif>کاربر</option>
+                                                <option value="admin" @if ($customer->role_type == 'admin') selected @endif>مدیر</option>
+                                                <option value="staff" @if ($customer->role_type == 'staff') selected @endif>کارمند</option>
+                                            </select>
+                                            <div class="absolute left-4 top-4 pointer-events-none">
+                                                <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        @error('role_type')
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                     <!-- Email -->
                                     <div class="space-y-2">
                                         <label for="email" class="block text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">آدرس ایمیل</label>
@@ -281,39 +325,20 @@
                         </div>
                     </div>
                 </div>
-                <div class="group">
-                    <div x-show="show" x-transition:enter="transition ease-out duration-700" x-transition:enter-start="opacity-0 transform translate-y-8" x-transition:enter-end="opacity-100 transform translate-y-0">
-                        <div class="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-2xl p-8 flex flex-col sm:flex-row justify-between items-center gap-6 group-hover:scale-[1.02] transition-all duration-500">
-                            <a href="{{ route('customers.index') }}"
-                               class="inline-flex items-center px-8 py-4 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                                </svg>
-                                انصراف
-                            </a>
-
-                            <div class="flex gap-4">
-                                <button type="reset"
-                                        class="px-8 py-4 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center">
-                                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                                    </svg>
-                                    بازنشانی تغییرات
-                                </button>
-
-                                <button type="submit"
-                                        :disabled="isSubmitting"
-                                        class="relative px-10 py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white rounded-2xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 flex items-center disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
-                                    <div x-show="isSubmitting" class="animate-spin ml-2 h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
-                                    <svg x-show="!isSubmitting" class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                    </svg>
-                                    <span class="relative z-10" x-text="isSubmitting ? 'در حال بروزرسانی...' : 'بروزرسانی کاربر'"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="mt-6 flex items-center justify-end">
+                    <a href="{{ route('customers.show', $customer->id) }}"
+                       class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-800 focus:outline-none focus:border-gray-800 focus:ring focus:ring-gray-300 mr-3 dark:focus:ring-gray-800 transition ease-in-out duration-150">
+                        {{ __('message.cancel') }}
+                    </a>
+                    <button type="submit"
+                            class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-800 focus:outline-none focus:border-blue-800 focus:ring focus:ring-blue-300 dark:focus:ring-blue-800 transition ease-in-out duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                        </svg>
+                        {{ __('message.update') }}
+                    </button>
                 </div>
             </form>
         </div>

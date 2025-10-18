@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class CartController extends Controller
 
         $subtotal = 0;
         foreach ($cart as $item) {
-            $price = $item['sale_price'] ?? $item['price'];
+            $price =  $item['price'];
             $subtotal += $price * $item['quantity'];
         }
 
@@ -48,7 +49,7 @@ class CartController extends Controller
                 'name' => $product->name,
                 'slug' => $product->slug,
                 'price' => $product->price,
-                'buy_price' => $product->buy_price,
+                'original_price' => $product->original_price,
                 'quantity' => $quantity,
                 'image' => $product->photo->address ?? 'images/placeholder.jpg',
             ];
