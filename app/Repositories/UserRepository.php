@@ -79,28 +79,29 @@ class UserRepository implements UserRepositoryInterface
 
     public function update($id, array $data)
     {
-        DB::beginTransaction();
-        try {
+//        DB::beginTransaction();
+//        try {
             $user = User::findOrFail($id);
 
             $userData = collect($data)->except(['avatar'])->toArray();
 
             $user->update($userData);
 
+
             $this->updateUserAvatar($user, $data);
 
-            DB::commit();
+//            DB::commit();
             return $user->fresh();
-
-        } catch (\Exception $exception) {
-            Log::error('User update failed', [
-                'user_id' => $id,
-                'error' => $exception->getMessage(),
-                'trace' => $exception->getTraceAsString()
-            ]);
-            DB::rollBack();
-            return null;
-        }
+//
+//        } catch (\Exception $exception) {
+//            Log::error('User update failed', [
+//                'user_id' => $id,
+//                'error' => $exception->getMessage(),
+//                'trace' => $exception->getTraceAsString()
+//            ]);
+//            DB::rollBack();
+//            return null;
+//        }
     }
 
     private function updateUserAvatar(User $user, array $data): void

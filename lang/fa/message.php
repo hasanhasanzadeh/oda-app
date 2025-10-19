@@ -447,4 +447,7 @@ return [
     'discount'=>'تخفیف',
     'name_en'=>'نام لاتین',
     'toman'=>'تومان',
+    'featured'=>'ویژه',
+    'is_featured'=>'ویژه',
+    'not_featured'=>'غیر ویژه',
 ];

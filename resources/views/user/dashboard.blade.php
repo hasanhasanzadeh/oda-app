@@ -211,13 +211,13 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                                     @foreach($favoriteProducts->take(4) as $product)
                                         <div class="border rounded-lg overflow-hidden hover:shadow-lg transition">
-                                            <a href="{{ route('products.show', $product->slug) }}">
+                                            <a href="{{ route('product.show', $product->slug) }}">
                                                 <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                                      alt="{{ $product->name }}"
                                                      class="w-full aspect-square object-cover">
                                             </a>
                                             <div class="p-3">
-                                                <a href="{{ route('products.show', $product->slug) }}"
+                                                <a href="{{ route('product.show', $product->slug) }}"
                                                    class="font-bold text-sm hover:text-blue-600 transition line-clamp-2 mb-2">
                                                     {{ $product->name }}
                                                 </a>

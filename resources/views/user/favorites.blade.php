@@ -25,7 +25,7 @@
                                     @foreach($products as $product)
                                         <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition">
                                             <div class="relative">
-                                                <a href="{{ route('products.show', $product->slug) }}">
+                                                <a href="{{ route('product.show', $product->slug) }}">
                                                     <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                                          alt="{{ $product->name }}"
                                                          class="w-full aspect-square object-cover">
@@ -53,7 +53,7 @@
                                             </div>
 
                                             <div class="p-4">
-                                                <a href="{{ route('products.show', $product->slug) }}"
+                                                <a href="{{ route('product.show', $product->slug) }}"
                                                    class="font-bold text-gray-900 hover:text-blue-600 transition line-clamp-2 mb-3 block">
                                                     {{ $product->name }}
                                                 </a>

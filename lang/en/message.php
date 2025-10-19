@@ -447,4 +447,7 @@ return [
     'discount'=>'discount',
     'name_en'=>'name latin',
     'toman'=>'toman',
+    'featured'=>'is featured',
+    'is_featured'=>'is featured',
+    'not_featured'=>'not featured',
 ];

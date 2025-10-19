@@ -196,7 +196,7 @@
                         @forelse($products as $product)
                             <div class="product-card bg-white rounded-lg shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                                 <div class="relative overflow-hidden aspect-square">
-                                    <a href="{{ route('products.show', $product->slug) }}">
+                                    <a href="{{ route('product.show', $product->slug) }}">
                                         <img src="{{ asset($product->photo->address ?? 'images/placeholder.jpg') }}"
                                              alt="{{ $product->name }}"
                                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
@@ -215,7 +215,7 @@
                                     @endif
 
                                     @auth
-                                        <form action="{{ route('favorites.toggle', $product) }}" method="POST" class="inline">
+                                        <form action="{{ route('user.favorites.toggle', $product) }}" method="POST" class="inline">
                                             @csrf
                                             <button type="submit"
                                                     class="absolute top-2 left-2 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100 shadow-lg">
@@ -226,7 +226,7 @@
                                 </div>
 
                                 <div class="p-4">
-                                    <a href="{{ route('products.show', $product->slug) }}"
+                                    <a href="{{ route('product.show', $product->slug) }}"
                                        class="font-bold text-gray-900 hover:text-blue-600 transition line-clamp-2 mb-2 block">
                                         {{ $product->name }}
                                     </a>

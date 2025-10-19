@@ -6,7 +6,66 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'فروشگاه آنلاین')</title>
 
-    @vite('resources/css/app.css')
+    <!-- PWA Meta Tags -->
+    <meta name="application-name" content="فروشگاه آنلاین">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="فروشگاه آنلاین">
+    <meta name="description" content="فروشگاه آنلاین حرفه‌ای با قابلیت‌های PWA پیشرفته">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-config" content="/browserconfig.xml">
+    <meta name="msapplication-TileColor" content="#3b82f6">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#3b82f6">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="/images/logo/logo-152x152.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/images/logo/logo-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/logo/logo-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="/images/logo/logo-167x167.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/logo-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/logo/logo-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileImage" content="/images/logo/logo-144x144.png">
+    <meta name="msapplication-square70x70logo" content="/images/logo/logo-70x70.png">
+    <meta name="msapplication-square150x150logo" content="/images/logo/logo-150x150.png">
+    <meta name="msapplication-wide310x150logo" content="/images/logo/logo-310x150.png">
+    <meta name="msapplication-square310x310logo" content="/images/logo/logo-310x310.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'فروشگاه آنلاین')">
+    <meta property="og:description" content="فروشگاه آنلاین حرفه‌ای با قابلیت‌های PWA پیشرفته">
+    <meta property="og:image" content="/images/logo/logo-512x512.png">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:site_name" content="فروشگاه آنلاین">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="@yield('title', 'فروشگاه آنلاین')">
+    <meta property="twitter:description" content="فروشگاه آنلاین حرفه‌ای با قابلیت‌های PWA پیشرفته">
+    <meta property="twitter:image" content="/images/logo/logo-512x512.png">
+
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    @vite(['resources/css/app.css', 'resources/css/pwa.css'])
     @vite('resources/js/app.js')
 
     <link rel="stylesheet" href="{{asset('/css/select2.min.css')}}">
@@ -84,11 +143,17 @@
                         </span>
                     </a>
                 @endauth
+                    @php
+                        $sum = 0;
+                    @endphp
+                    @foreach(session('cart') as $pr)
+                        @php $sum+=$pr['quantity'] @endphp
+                    @endforeach
                 <a href="{{ route('cart.index') }}" class="relative hover:text-blue-600 transition">
                     <i class="fas fa-shopping-cart text-2xl"></i>
                     <span id="cart-count" class="absolute -top-2 -left-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                            {{ session('cart') ? count(session('cart')) : 0 }}
-                        </span>
+                            {{ $sum }}
+                    </span>
                 </a>
                 <button id="mobile-menu-btn" class="lg:hidden text-2xl hover:text-blue-600 transition">
                     <i class="fas fa-bars"></i>
@@ -129,6 +194,9 @@
 <main class="min-h-screen">
     @yield('content')
 </main>
+
+<!-- PWA Components -->
+@include('components.pwa.install-prompt')
 
 <!-- Footer -->
 <footer class="bg-gray-900 text-gray-300 mt-16">
@@ -221,10 +289,239 @@
 <script src="{{asset('/js/jquery.min.js')}}"></script>
 <script src="{{asset('/js/app.bundle.js')}}"></script>
 <script src="{{asset('/js/buttons.js')}}"></script>
+
+<!-- PWA JavaScript -->
 <script>
+    // PWA Installation and Service Worker Management
+    class PWAManager {
+        constructor() {
+            this.deferredPrompt = null;
+            this.isInstalled = false;
+            this.swRegistration = null;
+            this.init();
+        }
+
+        async init() {
+            // Check if already installed
+            this.isInstalled = window.matchMedia('(display-mode: standalone)').matches || 
+                              window.navigator.standalone === true;
+
+            // Register service worker
+            await this.registerServiceWorker();
+
+            // Setup install prompt
+            this.setupInstallPrompt();
+
+            // Setup update notifications
+            this.setupUpdateNotifications();
+
+            // Setup offline detection
+            this.setupOfflineDetection();
+        }
+
+        async registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    this.swRegistration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
+                    });
+
+                    console.log('Service Worker registered successfully:', this.swRegistration);
+
+                    // Handle updates
+                    this.swRegistration.addEventListener('updatefound', () => {
+                        const newWorker = this.swRegistration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                this.showUpdateNotification();
+                            }
+                        });
+                    });
+
+                } catch (error) {
+                    console.error('Service Worker registration failed:', error);
+                }
+            }
+        }
+
+        setupInstallPrompt() {
+            // Listen for beforeinstallprompt event
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                this.deferredPrompt = e;
+                this.showInstallButton();
+            });
+
+            // Listen for appinstalled event
+            window.addEventListener('appinstalled', () => {
+                this.isInstalled = true;
+                this.hideInstallButton();
+                this.showInstallSuccessMessage();
+            });
+        }
+
+        setupUpdateNotifications() {
+            // Listen for service worker updates
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                window.location.reload();
+            });
+        }
+
+        setupOfflineDetection() {
+            // Update online/offline status
+            const updateOnlineStatus = () => {
+                const statusElement = document.getElementById('connection-status');
+                if (statusElement) {
+                    if (navigator.onLine) {
+                        statusElement.textContent = 'آنلاین';
+                        statusElement.className = 'text-green-600';
+                    } else {
+                        statusElement.textContent = 'آفلاین';
+                        statusElement.className = 'text-red-600';
+                    }
+                }
+            };
+
+            window.addEventListener('online', updateOnlineStatus);
+            window.addEventListener('offline', updateOnlineStatus);
+            updateOnlineStatus();
+        }
+
+        showInstallButton() {
+            if (this.isInstalled) return;
+
+            // Create install button
+            const installButton = document.createElement('button');
+            installButton.id = 'pwa-install-btn';
+            installButton.className = 'fixed bottom-4 left-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition z-50';
+            installButton.innerHTML = '<i class="fas fa-download ml-2"></i>نصب اپلیکیشن';
+            installButton.addEventListener('click', () => this.installApp());
+
+            document.body.appendChild(installButton);
+        }
+
+        hideInstallButton() {
+            const installButton = document.getElementById('pwa-install-btn');
+            if (installButton) {
+                installButton.remove();
+            }
+        }
+
+        async installApp() {
+            if (this.deferredPrompt) {
+                this.deferredPrompt.prompt();
+                const { outcome } = await this.deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install prompt');
+                } else {
+                    console.log('User dismissed the install prompt');
+                }
+                
+                this.deferredPrompt = null;
+                this.hideInstallButton();
+            }
+        }
+
+        showUpdateNotification() {
+            // Create update notification
+            const updateNotification = document.createElement('div');
+            updateNotification.id = 'pwa-update-notification';
+            updateNotification.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 max-w-sm';
+            updateNotification.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="font-bold">به‌روزرسانی موجود است!</p>
+                        <p class="text-sm">نسخه جدید اپلیکیشن آماده است.</p>
+                    </div>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-gray-200 ml-2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="mt-2 flex gap-2">
+                    <button onclick="window.location.reload()" class="bg-white text-green-600 px-3 py-1 rounded text-sm font-bold">
+                        به‌روزرسانی
+                    </button>
+                    <button onclick="this.parentElement.parentElement.remove()" class="text-white hover:text-gray-200 text-sm">
+                        بعداً
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(updateNotification);
+
+            // Auto remove after 10 seconds
+            setTimeout(() => {
+                if (updateNotification.parentNode) {
+                    updateNotification.remove();
+                }
+            }, 10000);
+        }
+
+        showInstallSuccessMessage() {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            successMessage.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-check-circle ml-2"></i>
+                    <span>اپلیکیشن با موفقیت نصب شد!</span>
+                </div>
+            `;
+
+            document.body.appendChild(successMessage);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (successMessage.parentNode) {
+                    successMessage.remove();
+                }
+            }, 3000);
+        }
+
+        // Request notification permission
+        async requestNotificationPermission() {
+            if ('Notification' in window && Notification.permission === 'default') {
+                const permission = await Notification.requestPermission();
+                return permission === 'granted';
+            }
+            return Notification.permission === 'granted';
+        }
+
+        // Show notification
+        async showNotification(title, options = {}) {
+            if (await this.requestNotificationPermission()) {
+                if (this.swRegistration) {
+                    this.swRegistration.showNotification(title, {
+                        body: options.body || 'اعلان جدید از فروشگاه آنلاین',
+                        icon: '/images/logo/logo-192x192.png',
+                        badge: '/images/logo/logo-72x72.png',
+                        vibrate: [100, 50, 100],
+                        ...options
+                    });
+                }
+            }
+        }
+    }
+
+    // Initialize PWA Manager
+    const pwaManager = new PWAManager();
+
     // Mobile menu toggle
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
         document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Connection status indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add connection status to header
+        const header = document.querySelector('header .container');
+        if (header) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'text-xs text-center mt-2';
+            statusDiv.innerHTML = '<span id="connection-status" class="text-green-600">آنلاین</span>';
+            header.appendChild(statusDiv);
+        }
     });
 </script>
 

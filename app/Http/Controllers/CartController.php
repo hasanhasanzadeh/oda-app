@@ -36,7 +36,8 @@ class CartController extends Controller
 
         $quantity = $request->input('quantity', 1);
 
-        if ($product->stock < $quantity) {
+        $sum = $quantity+(session('cart')[$product->id]['quantity'] ?? 0);
+        if ($product->quantity < $sum) {
             return back()->with('error', 'موجودی کافی نیست');
         }
 

@@ -253,9 +253,326 @@ input[type="number"] {
     text-align: right;
 }
 
+/* PWA Specific Styles */
+@layer base {
+    /* PWA Safe Area Support */
+    .pwa-container {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    /* PWA Touch Optimizations */
+    .pwa-touch {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* PWA Scrollbar */
+    .pwa-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f7fafc;
+    }
+
+    .pwa-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    .pwa-scrollbar::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 3px;
+    }
+
+    .pwa-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 3px;
+    }
+
+    .pwa-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+    }
+}
+
+@layer components {
+    /* PWA Notification Styles */
+    .pwa-notification {
+        @apply fixed top-4 right-4 z-50 max-w-sm bg-white rounded-lg shadow-xl p-4;
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    .pwa-notification-success {
+        @apply border-r-4 border-green-500;
+    }
+
+    .pwa-notification-error {
+        @apply border-r-4 border-red-500;
+    }
+
+    .pwa-notification-warning {
+        @apply border-r-4 border-yellow-500;
+    }
+
+    .pwa-notification-info {
+        @apply border-r-4 border-blue-500;
+    }
+
+    /* PWA Install Prompt */
+    .pwa-install-prompt {
+        @apply fixed bottom-4 left-4 right-4 z-50 bg-white rounded-xl shadow-2xl p-6;
+        animation: slideInUp 0.3s ease-out;
+    }
+
+    /* PWA Offline Indicator */
+    .pwa-offline-indicator {
+        @apply fixed bottom-4 right-4 z-50 bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium;
+        animation: pulse 2s infinite;
+    }
+
+    /* PWA Loading States */
+    .pwa-loading {
+        @apply animate-pulse bg-gray-200 rounded;
+    }
+
+    .pwa-skeleton {
+        @apply bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 bg-[length:200%_100%] animate-pulse;
+        animation: shimmer 1.5s infinite;
+    }
+
+    /* PWA Button Variants */
+    .btn-pwa {
+        @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+
+    .btn-pwa-primary {
+        @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+    }
+
+    .btn-pwa-secondary {
+        @apply bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-500;
+    }
+
+    .btn-pwa-success {
+        @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+    }
+
+    .btn-pwa-danger {
+        @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+    }
+
+    /* PWA Card Variants */
+    .card-pwa {
+        @apply bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    }
+
+    .card-pwa-elevated {
+        @apply shadow-2xl;
+    }
+
+    .card-pwa-flat {
+        @apply shadow-none border border-gray-200;
+    }
+}
+
+@layer utilities {
+    /* PWA Specific Utilities */
+    .pwa-safe-area-inset {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+
+    .pwa-no-scroll {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pwa-touch-manipulation {
+        touch-action: manipulation;
+    }
+
+    .pwa-touch-pan-x {
+        touch-action: pan-x;
+    }
+
+    .pwa-touch-pan-y {
+        touch-action: pan-y;
+    }
+
+    .pwa-touch-none {
+        touch-action: none;
+    }
+
+    /* PWA Animation Utilities */
+    .pwa-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .pwa-slide-in-up {
+        animation: slideInUp 0.3s ease-out;
+    }
+
+    .pwa-slide-in-right {
+        animation: slideInRight 0.3s ease-out;
+    }
+
+    .pwa-slide-in-left {
+        animation: slideInLeft 0.3s ease-out;
+    }
+
+    .pwa-scale-in {
+        animation: scaleIn 0.2s ease-out;
+    }
+
+    .pwa-bounce-in {
+        animation: bounceIn 0.6s ease-out;
+    }
+
+    /* PWA Responsive Utilities */
+    .pwa-mobile-only {
+        @apply block md:hidden;
+    }
+
+    .pwa-desktop-only {
+        @apply hidden md:block;
+    }
+
+    .pwa-tablet-only {
+        @apply hidden sm:block lg:hidden;
+    }
+
+    /* PWA Status Colors */
+    .pwa-status-online {
+        @apply text-green-600 bg-green-100;
+    }
+
+    .pwa-status-offline {
+        @apply text-red-600 bg-red-100;
+    }
+
+    .pwa-status-syncing {
+        @apply text-blue-600 bg-blue-100;
+    }
+
+    .pwa-status-error {
+        @apply text-yellow-600 bg-yellow-100;
+    }
+}
+
+/* PWA Keyframe Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* PWA Media Queries */
+@media (display-mode: standalone) {
+    /* Styles for PWA when installed */
+    .pwa-standalone {
+        /* Add specific styles for standalone mode */
+    }
+    
+    .pwa-standalone .pwa-install-prompt {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    /* Disable animations for users who prefer reduced motion */
+    .pwa-fade-in,
+    .pwa-slide-in-up,
+    .pwa-slide-in-right,
+    .pwa-slide-in-left,
+    .pwa-scale-in,
+    .pwa-bounce-in {
+        animation: none;
+    }
+}
+
 /* Print Styles */
 @media print {
     .no-print {
+        display: none !important;
+    }
+    
+    .pwa-notification,
+    .pwa-install-prompt,
+    .pwa-offline-indicator {
         display: none !important;
     }
 }

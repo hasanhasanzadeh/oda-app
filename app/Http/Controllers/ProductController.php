@@ -94,7 +94,7 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with(['images', 'category', 'comments.user'])
+        $product = Product::with(['photo','gallery', 'category', 'comments.user'])
             ->where('slug', $slug)
             ->whereIn('status', ['active', 'soon'])
             ->firstOrFail();

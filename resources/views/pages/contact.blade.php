@@ -83,13 +83,13 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label class="block font-bold mb-2">نام و نام خانوادگی *</label>
-                                        <input type="text" name="name" required
+                                        <input type="text" name="full_name" value="{{old('full_name')}}" required
                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition"
                                                placeholder="نام خود را وارد کنید">
                                     </div>
                                     <div>
                                         <label class="block font-bold mb-2">شماره تماس *</label>
-                                        <input type="tel" name="phone" required
+                                        <input type="tel" name="mobile" value="{{old('mobile')}}" required
                                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition"
                                                placeholder="09123456789">
                                     </div>
@@ -97,7 +97,7 @@
 
                                 <div>
                                     <label class="block font-bold mb-2">ایمیل *</label>
-                                    <input type="email" name="email" required
+                                    <input type="email" name="email" value="{{old('email')}}"
                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition"
                                            placeholder="example@email.com">
                                 </div>
@@ -105,7 +105,7 @@
                                 <div>
                                     <label class="block font-bold mb-2">موضوع *</label>
                                     <select name="subject" required
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition">
+                                            class="w-full px-8 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition">
                                         <option value="">انتخاب کنید</option>
                                         <option value="پشتیبانی فنی">پشتیبانی فنی</option>
                                         <option value="پیگیری سفارش">پیگیری سفارش</option>

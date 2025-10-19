@@ -212,6 +212,19 @@
                             <option value="soon" {{ $product->status == 'soon' ? 'selected' : '' }}>{{ __('message.soon') }}</option>
                         </select>
                     </div>
+                    <div>
+                        <label for="is_featured" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            {{ __('message.featured') }}
+                        </label>
+                        <select
+                            id="is_featured"
+                            name="is_featured"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:focus:border-blue-500"
+                        >
+                            <option value="1" @if($product->is_featured==1) selected @endif>{{ __('message.featured') }}</option>
+                            <option value="0" @if($product->is_featured==0) selected @endif>{{ __('message.not_featured') }}</option>
+                        </select>
+                    </div>
                     <div class="md:col-span-2">
                             <x-ckeditor-admin
                                     name="description"

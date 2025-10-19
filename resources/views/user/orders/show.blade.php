@@ -91,7 +91,7 @@
                                              alt="{{ $item->product_name }}"
                                              class="w-20 h-20 object-cover rounded-lg">
                                         <div class="flex-1">
-                                            <a href="{{ route('products.show', $item->product->slug) }}"
+                                            <a href="{{ route('product.show', $item->product->slug) }}"
                                                class="font-bold hover:text-blue-600 transition">
                                                 {{ $item->product_name }}
                                             </a>

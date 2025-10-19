@@ -48,19 +48,13 @@
                             @endif
                         </div>
 
-                        <div class="flex gap-3 justify-center">
-                            <div class="w-20 h-20 rounded-lg overflow-hidden border-2 border-blue-500 cursor-pointer hover:scale-105 transition-transform">
-                                <img src="{{ $product->photo->address?? asset('images/default-image.png') }}" alt="thumb" class="w-full h-full object-cover">
-                            </div>
-                        </div>
                         @if(isset($product->gallery))
-                            <div>
-                                <div class="w-20 h-20 rounded-md overflow-hidden border-2 border-blue-500 cursor-pointer hover:scale-105 transition-transform">
-                                    @foreach($product->gallery as $photo)
+                            <div class="grid grid-cols-3">
+                                @foreach($product->gallery as $photo)
+                                <div class="w-20 h-20 flex justify-between rounded-md overflow-hidden border-2 border-blue-500 cursor-pointer hover:scale-105 transition-transform">
                                         <img src="{{ $photo->address?? asset('images/default-image.png') }}" alt="thumb" class="w-full h-full object-cover">
-                                    @endforeach
                                 </div>
-                                <span>{{$product->gallery()->count()}}</span>
+                                @endforeach
                             </div>
                         @endif
 

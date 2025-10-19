@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Contact\ContactCreateRequest;
 use App\Models\Setting;
+use App\Services\ContactService;
 use App\Services\ContentService;
 use App\Services\QuestionService;
 
 class ContentController extends Controller
 {
     public function __construct(readonly private ContentService $contentService,
-                                readonly private QuestionService $questionService
+                                readonly private QuestionService $questionService,
+                                readonly private ContactService $contactService
     )
     {
     }
@@ -45,4 +48,13 @@ class ContentController extends Controller
 
             return view('pages.rules', compact(['setting','rules']));
         }
+
+    public function store(ContactCreateRequest $request)
+    {
+        $contact = $this->contactService->create($request->validated());
+        if(!$contact){
+            return redirect()->back('error','خطا در ارسال پیام، لطفا مجددا تلاش کنید');
+        }
+        return redirect()->back()->with('success', 'پیام شما با موفقیت ارسال شد');
+    }
 }

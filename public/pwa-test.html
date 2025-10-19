@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تست PWA - فروشگاه آنلاین</title>
+    <meta name="theme-color" content="#3b82f6">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Vazirmatn', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">تست PWA</h1>
+                        <p class="text-gray-600">بررسی قابلیت‌های Progressive Web App</p>
+                    </div>
+                    <div class="text-right">
+                        <div id="connection-status" class="text-sm">
+                            <span class="inline-block w-3 h-3 bg-green-500 rounded-full ml-2"></span>
+                            <span>آنلاین</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Results -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Service Worker Tests -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-cogs text-blue-500 ml-2"></i>
+                        Service Worker
+                    </h3>
+                    <div id="sw-tests" class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>ثبت Service Worker</span>
+                            <span id="sw-registration" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>حالت فعال</span>
+                            <span id="sw-active" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>Cache Storage</span>
+                            <span id="sw-cache" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manifest Tests -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-file-alt text-green-500 ml-2"></i>
+                        Manifest
+                    </h3>
+                    <div id="manifest-tests" class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>بارگذاری Manifest</span>
+                            <span id="manifest-load" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>نام اپلیکیشن</span>
+                            <span id="manifest-name" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>آیکون‌ها</span>
+                            <span id="manifest-icons" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PWA Features -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-mobile-alt text-purple-500 ml-2"></i>
+                        قابلیت‌های PWA
+                    </h3>
+                    <div id="pwa-features" class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>نصب اپلیکیشن</span>
+                            <span id="install-prompt" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>اعلان‌ها</span>
+                            <span id="notifications" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>Background Sync</span>
+                            <span id="background-sync" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">
+                        <i class="fas fa-tachometer-alt text-orange-500 ml-2"></i>
+                        عملکرد
+                    </h3>
+                    <div id="performance-tests" class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>Cache Hit Rate</span>
+                            <span id="cache-hit-rate" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>زمان بارگذاری</span>
+                            <span id="load-time" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <span>حجم Cache</span>
+                            <span id="cache-size" class="text-gray-400">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                <button onclick="runAllTests()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">
+                    <i class="fas fa-play ml-2"></i>
+                    اجرای همه تست‌ها
+                </button>
+                <button onclick="clearCache()" class="bg-red-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-red-700 transition">
+                    <i class="fas fa-trash ml-2"></i>
+                    پاک کردن Cache
+                </button>
+                <button onclick="testNotification()" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition">
+                    <i class="fas fa-bell ml-2"></i>
+                    تست اعلان
+                </button>
+                <button onclick="goOffline()" class="bg-yellow-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-yellow-700 transition">
+                    <i class="fas fa-wifi-slash ml-2"></i>
+                    تست آفلاین
+                </button>
+            </div>
+
+            <!-- Test Log -->
+            <div class="mt-6 bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">
+                    <i class="fas fa-list text-gray-500 ml-2"></i>
+                    گزارش تست
+                </h3>
+                <div id="test-log" class="bg-gray-900 text-green-400 p-4 rounded font-mono text-sm h-64 overflow-y-auto">
+                    <div>آماده برای تست PWA...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = {};
+        let swRegistration = null;
+
+        // Logging function
+        function log(message, type = 'info') {
+            const logElement = document.getElementById('test-log');
+            const timestamp = new Date().toLocaleTimeString('fa-IR');
+            const color = type === 'error' ? 'text-red-400' : type === 'success' ? 'text-green-400' : 'text-blue-400';
+            logElement.innerHTML += `<div class="${color}">[${timestamp}] ${message}</div>`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // Update test result
+        function updateTestResult(testId, status, message = '') {
+            const element = document.getElementById(testId);
+            if (element) {
+                if (status === 'success') {
+                    element.innerHTML = '<i class="fas fa-check text-green-500"></i>';
+                } else if (status === 'error') {
+                    element.innerHTML = '<i class="fas fa-times text-red-500"></i>';
+                } else {
+                    element.innerHTML = message;
+                }
+            }
+        }
+
+        // Test Service Worker
+        async function testServiceWorker() {
+            log('شروع تست Service Worker...');
+            
+            try {
+                if ('serviceWorker' in navigator) {
+                    swRegistration = await navigator.serviceWorker.register('/sw.js');
+                    updateTestResult('sw-registration', 'success');
+                    log('Service Worker با موفقیت ثبت شد', 'success');
+                    
+                    if (swRegistration.active) {
+                        updateTestResult('sw-active', 'success');
+                        log('Service Worker فعال است', 'success');
+                    } else {
+                        updateTestResult('sw-active', 'error');
+                        log('Service Worker فعال نیست', 'error');
+                    }
+                } else {
+                    updateTestResult('sw-registration', 'error');
+                    log('Service Worker پشتیبانی نمی‌شود', 'error');
+                }
+            } catch (error) {
+                updateTestResult('sw-registration', 'error');
+                log(`خطا در ثبت Service Worker: ${error.message}`, 'error');
+            }
+        }
+
+        // Test Manifest
+        async function testManifest() {
+            log('شروع تست Manifest...');
+            
+            try {
+                const response = await fetch('/manifest.json');
+                const manifest = await response.json();
+                
+                updateTestResult('manifest-load', 'success');
+                log('Manifest با موفقیت بارگذاری شد', 'success');
+                
+                updateTestResult('manifest-name', 'success', manifest.name || 'نامشخص');
+                log(`نام اپلیکیشن: ${manifest.name}`, 'success');
+                
+                if (manifest.icons && manifest.icons.length > 0) {
+                    updateTestResult('manifest-icons', 'success', `${manifest.icons.length} آیکون`);
+                    log(`${manifest.icons.length} آیکون یافت شد`, 'success');
+                } else {
+                    updateTestResult('manifest-icons', 'error');
+                    log('هیچ آیکونی یافت نشد', 'error');
+                }
+            } catch (error) {
+                updateTestResult('manifest-load', 'error');
+                log(`خطا در بارگذاری Manifest: ${error.message}`, 'error');
+            }
+        }
+
+        // Test PWA Features
+        async function testPWAFeatures() {
+            log('شروع تست قابلیت‌های PWA...');
+            
+            // Test install prompt
+            if ('BeforeInstallPromptEvent' in window) {
+                updateTestResult('install-prompt', 'success');
+                log('قابلیت نصب اپلیکیشن پشتیبانی می‌شود', 'success');
+            } else {
+                updateTestResult('install-prompt', 'error');
+                log('قابلیت نصب اپلیکیشن پشتیبانی نمی‌شود', 'error');
+            }
+            
+            // Test notifications
+            if ('Notification' in window) {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    updateTestResult('notifications', 'success');
+                    log('اعلان‌ها پشتیبانی می‌شوند', 'success');
+                } else {
+                    updateTestResult('notifications', 'error');
+                    log('مجوز اعلان‌ها داده نشد', 'error');
+                }
+            } else {
+                updateTestResult('notifications', 'error');
+                log('اعلان‌ها پشتیبانی نمی‌شوند', 'error');
+            }
+            
+            // Test background sync
+            if ('serviceWorker' in navigator && 'sync' in window.ServiceWorkerRegistration.prototype) {
+                updateTestResult('background-sync', 'success');
+                log('Background Sync پشتیبانی می‌شود', 'success');
+            } else {
+                updateTestResult('background-sync', 'error');
+                log('Background Sync پشتیبانی نمی‌شود', 'error');
+            }
+        }
+
+        // Test Performance
+        async function testPerformance() {
+            log('شروع تست عملکرد...');
+            
+            // Test cache
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    let totalSize = 0;
+                    
+                    for (const cacheName of cacheNames) {
+                        const cache = await caches.open(cacheName);
+                        const keys = await cache.keys();
+                        totalSize += keys.length;
+                    }
+                    
+                    updateTestResult('cache-size', 'success', `${totalSize} آیتم`);
+                    log(`حجم Cache: ${totalSize} آیتم`, 'success');
+                } catch (error) {
+                    updateTestResult('cache-size', 'error');
+                    log(`خطا در محاسبه حجم Cache: ${error.message}`, 'error');
+                }
+            }
+            
+            // Test load time
+            const loadTime = performance.now();
+            updateTestResult('load-time', 'success', `${Math.round(loadTime)}ms`);
+            log(`زمان بارگذاری: ${Math.round(loadTime)}ms`, 'success');
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            log('شروع تست‌های PWA...', 'info');
+            await testServiceWorker();
+            await testManifest();
+            await testPWAFeatures();
+            await testPerformance();
+            log('تمام تست‌ها تکمیل شد', 'success');
+        }
+
+        // Clear cache
+        async function clearCache() {
+            log('شروع پاک کردن Cache...');
+            try {
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+                    log('Cache با موفقیت پاک شد', 'success');
+                }
+            } catch (error) {
+                log(`خطا در پاک کردن Cache: ${error.message}`, 'error');
+            }
+        }
+
+        // Test notification
+        async function testNotification() {
+            log('شروع تست اعلان...');
+            try {
+                if (swRegistration) {
+                    await swRegistration.showNotification('تست اعلان', {
+                        body: 'این یک اعلان تست است',
+                        icon: '/images/logo/logo-192x192.png',
+                        badge: '/images/logo/logo-72x72.png'
+                    });
+                    log('اعلان با موفقیت ارسال شد', 'success');
+                } else {
+                    log('Service Worker ثبت نشده است', 'error');
+                }
+            } catch (error) {
+                log(`خطا در ارسال اعلان: ${error.message}`, 'error');
+            }
+        }
+
+        // Go offline test
+        function goOffline() {
+            log('تست حالت آفلاین...');
+            window.location.href = '/offline';
+        }
+
+        // Connection status
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connection-status');
+            if (navigator.onLine) {
+                statusElement.innerHTML = '<span class="inline-block w-3 h-3 bg-green-500 rounded-full ml-2"></span><span>آنلاین</span>';
+            } else {
+                statusElement.innerHTML = '<span class="inline-block w-3 h-3 bg-red-500 rounded-full ml-2"></span><span>آفلاین</span>';
+            }
+        }
+
+        // Event listeners
+        window.addEventListener('online', updateConnectionStatus);
+        window.addEventListener('offline', updateConnectionStatus);
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateConnectionStatus();
+            runAllTests();
+        });
+    </script>
+</body>
+</html>

@@ -17,6 +17,7 @@ class Contact extends Model
         'subject',
         'user_id',
         'mobile',
+        'email',
         'ip_address',
         'message',
         'read'
@@ -28,7 +29,7 @@ class Contact extends Model
         'mobile'=>'required|ir_mobile:zero',
         'email'=>'nullable|email|max:255',
         'message'=>'required|string|min:3|max:500',
-        'g-recaptcha-response' => 'required|captcha',
+//        'g-recaptcha-response' => 'required|captcha',
     ];
 
     protected function casts(): array

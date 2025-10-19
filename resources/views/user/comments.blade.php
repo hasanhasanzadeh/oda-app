@@ -21,7 +21,7 @@
                                     <div class="p-6 hover:bg-gray-50 transition">
                                         <div class="flex flex-col md:flex-row gap-4">
                                             <!-- Product Image -->
-                                            <a href="{{ route('products.show', $comment->product->slug) }}"
+                                            <a href="{{ route('product.show', $comment->product->slug) }}"
                                                class="flex-shrink-0">
                                                 <img src="{{ asset($comment->product->photo->address ?? 'images/placeholder.jpg') }}"
                                                      alt="{{ $comment->product->name }}"
@@ -32,7 +32,7 @@
                                             <div class="flex-1">
                                                 <div class="flex flex-col md:flex-row md:items-start justify-between gap-2 mb-3">
                                                     <div>
-                                                        <a href="{{ route('products.show', $comment->product->slug) }}"
+                                                        <a href="{{ route('product.show', $comment->product->slug) }}"
                                                            class="font-bold text-lg hover:text-blue-600 transition">
                                                             {{ $comment->product->name }}
                                                         </a>
@@ -71,7 +71,7 @@
 
                                                 <!-- Actions -->
                                                 <div class="flex items-center gap-4 mt-4">
-                                                    <a href="{{ route('products.show', $comment->product->slug) }}"
+                                                    <a href="{{ route('product.show', $comment->product->slug) }}"
                                                        class="text-blue-600 hover:text-blue-700 text-sm font-bold">
                                                         <i class="fas fa-eye ml-1"></i>
                                                         مشاهده محصول

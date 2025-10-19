@@ -17,7 +17,7 @@
                                      class="w-full md:w-32 h-32 object-cover rounded-lg">
 
                                 <div class="flex-1">
-                                    <a href="{{ route('products.show', $item['slug']) }}"
+                                    <a href="{{ route('product.show', $item['slug']) }}"
                                        class="text-lg font-bold text-gray-900 hover:text-blue-600 transition mb-2 block">
                                         {{ $item['name'] }}
                                     </a>

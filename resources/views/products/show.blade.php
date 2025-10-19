@@ -49,10 +49,10 @@
 
                 <!-- Thumbnail Gallery -->
                 <div class="flex gap-2 overflow-x-auto pb-2">
-                    @foreach($product->images as $index => $image)
+                    @foreach($product->gallery as $index => $image)
                         <div class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 cursor-pointer transition hover:border-blue-500 {{ $index === 0 ? 'border-blue-500' : 'border-gray-200' }}"
-                             onclick="changeMainImage('{{ asset($image->image) }}', this)">
-                            <img src="{{ asset($image->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+                             onclick="changeMainImage('{{ asset($image->address) }}', this)">
+                            <img src="{{ asset($image->address) }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
                         </div>
                     @endforeach
                 </div>
@@ -95,11 +95,11 @@
                     @endif
                 </div>
 
-                <!-- Stock Status -->
-                <div class="mb-6 p-4 rounded-lg {{ $product->stock > 0 ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800' }}">
-                    @if($product->stock > 0)
+                <!-- quantity Status -->
+                <div class="mb-6 p-4 rounded-lg {{ $product->quantity > 0 ? 'bg-green-50 text-green-800' : 'bg-red-50 text-red-800' }}">
+                    @if($product->quantity > 0)
                         <i class="fas fa-check-circle ml-2"></i>
-                        موجود در انبار ({{ $product->stock }} عدد)
+                        موجود در انبار ({{ $product->quantity }} عدد)
                     @else
                         <i class="fas fa-times-circle ml-2"></i>
                         ناموجود
@@ -115,10 +115,10 @@
 
                 <!-- Actions -->
                 <div class="space-y-3 mb-6">
-                    @if($product->stock > 0)
+                    @if($product->quantity > 0)
                         <form action="{{ route('cart.add', $product) }}" method="POST" class="flex gap-3">
                             @csrf
-                            <input type="number" name="quantity" value="1" min="1" max="{{ $product->stock }}"
+                            <input type="number" name="quantity" value="1" min="1" max="{{ $product->quantity }}"
                                    class="w-20 px-4 py-3 border border-gray-300 rounded-lg text-center">
                             <button type="submit"
                                     class="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-105 transform transition shadow-lg">
@@ -134,7 +134,7 @@
                     @endif
 
                     @auth
-                        <form action="{{ route('favorites.toggle', $product) }}" method="POST">
+                        <form action="{{ route('user.favorites.toggle', $product) }}" method="POST">
                             @csrf
                             <button type="submit"
                                     class="w-full border-2 border-red-500 text-red-500 px-6 py-3 rounded-lg font-bold hover:bg-red-500 hover:text-white transition">
@@ -183,7 +183,7 @@
                 <!-- Description Tab -->
                 <div id="description-tab" class="tab-content">
                     <div class="prose max-w-none text-gray-700 leading-relaxed">
-                        {!! nl2br(e($product->description)) !!}
+                        {!! $product->description !!}
                     </div>
                 </div>
 
@@ -282,13 +282,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($relatedProducts as $relatedProduct)
                         <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-                            <a href="{{ route('products.show', $relatedProduct->slug) }}">
+                            <a href="{{ route('product.show', $relatedProduct->slug) }}">
                                 <img src="{{ asset($relatedProduct->photo->address ?? 'images/placeholder.jpg') }}"
                                      alt="{{ $relatedProduct->name }}"
                                      class="w-full aspect-square object-cover hover:scale-105 transition-transform duration-300">
                             </a>
                             <div class="p-4">
-                                <a href="{{ route('products.show', $relatedProduct->slug) }}"
+                                <a href="{{ route('product.show', $relatedProduct->slug) }}"
                                    class="font-bold hover:text-blue-600 transition line-clamp-2 mb-2">
                                     {{ $relatedProduct->name }}
                                 </a>

@@ -18,6 +18,11 @@ require __DIR__ . '/web/test.php';
 
 Route::post('/ckeditor-upload', [CkeditorUploadController::class, 'upload'])->name('ckeditor.upload')->middleware('auth');
 
+// PWA Routes
+Route::get('/offline', function () {
+    return view('offline');
+})->name('offline');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
@@ -70,16 +75,4 @@ Route::get('/faq', [ContentController::class,'faq'])->name('faq');
 Route::get('/privacy', [ContentController::class,'privacy'])->name('privacy');
 Route::get('/rules', [ContentController::class,'rules'])->name('rules');
 
-Route::post('/contact', function(\Illuminate\Http\Request $request) {
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email',
-        'phone' => 'required|string',
-        'subject' => 'required|string',
-        'message' => 'required|string|max:1000',
-    ]);
-    // Send email or save to database
-    // Mail::to('info@shop.com')->send(new ContactMail($request->all()));
-
-    return back()->with('success', 'پیام شما با موفقیت ارسال شد. به زودی با شما تماس می‌گیریم.');
-})->name('contact.submit');
+Route::post('/contact',[ ContentController::class,'store'])->name('contact.submit');
