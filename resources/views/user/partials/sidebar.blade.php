@@ -45,13 +45,10 @@
                 <i class="fas fa-comment w-5"></i>
                 <span>نظرات من</span>
             </a>
-            <form action="{{route('user.logout')}}" method="POST">
-                @csrf
-                <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition">
+                <a href="{{route('user.logout')}}" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition">
                     <i class="fas fa-sign-out-alt w-5"></i>
                     <span>خروج</span>
-                </button>
-            </form>
+                </a>
         </nav>
     </div>
 </aside>
