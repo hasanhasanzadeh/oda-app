@@ -146,9 +146,12 @@
                     @php
                         $sum = 0;
                     @endphp
-                    @foreach(session('cart') as $pr)
-                        @php $sum+=$pr['quantity'] @endphp
-                    @endforeach
+                    @if(session('cart') !== null)
+                        @foreach(session('cart') as $pr)
+                            @php $sum+=$pr['quantity'] @endphp
+                        @endforeach
+                    @endif
+
                 <a href="{{ route('cart.index') }}" class="relative hover:text-blue-600 transition">
                     <i class="fas fa-shopping-cart text-2xl"></i>
                     <span id="cart-count" class="absolute -top-2 -left-2 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -303,7 +306,7 @@
 
         async init() {
             // Check if already installed
-            this.isInstalled = window.matchMedia('(display-mode: standalone)').matches || 
+            this.isInstalled = window.matchMedia('(display-mode: standalone)').matches ||
                               window.navigator.standalone === true;
 
             // Register service worker
@@ -411,13 +414,13 @@
             if (this.deferredPrompt) {
                 this.deferredPrompt.prompt();
                 const { outcome } = await this.deferredPrompt.userChoice;
-                
+
                 if (outcome === 'accepted') {
                     console.log('User accepted the install prompt');
                 } else {
                     console.log('User dismissed the install prompt');
                 }
-                
+
                 this.deferredPrompt = null;
                 this.hideInstallButton();
             }
