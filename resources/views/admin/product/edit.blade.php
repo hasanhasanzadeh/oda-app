@@ -244,6 +244,14 @@
                             @enderror
                         </div>
                 </div>
+                <div class="md:col-span-2">
+                    <div class="w-full px-3  my-3">
+                        <label for="content" class="block uppercase tracking-wide text-gray-700 dark:text-gray-50 font-bold mb-2">
+                            متن اضافی درباره محصول
+                        </label>
+                        <textarea name="content" class="form-textarea appearance-none h-[700px] block w-full dark:bg-gray-700 dark:text-gray-200  bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="{{__('message.description')}}" id="content" cols="30" rows="45">{{$product->content}}</textarea>
+                    </div>
+                </div>
                 @include('admin.partials.meta_edit', ['object' => $product])
                 <div class="mt-6 flex items-center justify-end">
                     <a href="{{ route('products.show', $product->id) }}"
@@ -267,6 +275,7 @@
 @endsection
 
 @push('script')
+    <script src="{{asset('plugin/ckeditor/ckeditor.js')}}"></script>
     <script>
         $(document).ready(function () {
             $("#name").keyup(function () {
@@ -288,6 +297,139 @@
                     });
                 }
             });
+        });
+        var editor = CKEDITOR.replace('content',{
+            customConfig: 'config.js',
+            toolbar: 'simple',
+            language: '{{Config::get('app.locale')}}',
+            removePlugins: 'cloudservices, easyimage',
+            filebrowserImageUploadUrl: '/admin/upload-image?type=Images',
+            filebrowserUploadMethod: 'form',
+            filebrowserUploadUrl:'/admin/upload-image?type=Images',
+            filebrowserImage2BrowseUrl:'/admin/upload-image?type=Images',
+            filebrowserImageBrowseUrl: '/admin/upload-image?type=Images',
+            filebrowserBrowseUrl: '/admin/upload-image?type=Files',
+        });
+
+        // Function to add CSRF token to form
+        function addCsrfTokenToForm(form) {
+            if (!form) return;
+            var existingToken = form.querySelector('input[name="_token"]');
+            if (!existingToken) {
+                var tokenInput = form.ownerDocument.createElement('input');
+                tokenInput.type = 'hidden';
+                tokenInput.name = '_token';
+                tokenInput.value = '{{ csrf_token() }}';
+                form.appendChild(tokenInput);
+            }
+        }
+
+        // Global listener for CKEditor iframe forms
+        (function() {
+            // Watch for new iframes being added (CKEditor creates them dynamically)
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1) { // Element node
+                            // Check if it's an iframe or contains iframes
+                            var iframes = node.tagName === 'IFRAME' ? [node] : node.querySelectorAll ? node.querySelectorAll('iframe') : [];
+                            iframes.forEach(function(iframe) {
+                                iframe.addEventListener('load', function() {
+                                    try {
+                                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                        if (iframeDoc) {
+                                            var form = iframeDoc.querySelector('form[action*="upload-image"]');
+                                            if (form) {
+                                                addCsrfTokenToForm(form);
+                                                // Also intercept submit
+                                                form.addEventListener('submit', function(e) {
+                                                    addCsrfTokenToForm(form);
+                                                }, true);
+                                            }
+                                        }
+                                    } catch (e) {
+                                        // Cross-origin, ignore
+                                    }
+                                });
+                                // Also check immediately if already loaded
+                                if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+                                    iframe.dispatchEvent(new Event('load'));
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            var targetNode = document.body || document.documentElement;
+            if (targetNode) {
+                observer.observe(targetNode, {
+                    childList: true,
+                    subtree: true
+                });
+            } else {
+                // Wait for body to be available
+                document.addEventListener('DOMContentLoaded', function() {
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true
+                    });
+                });
+            }
+        })();
+
+        // Intercept file browser form submissions to add CSRF token
+        editor.on('fileDialogRequest', function(evt) {
+            var fileInput = evt.data.fileInput.$;
+            if (fileInput && fileInput.form) {
+                addCsrfTokenToForm(fileInput.form);
+            }
+        });
+
+        // Intercept when the upload form is created in iframe
+        editor.on('dialogDefinition', function(evt) {
+            var dialogName = evt.data.name;
+            var dialogDefinition = evt.data.definition;
+
+            if (dialogName === 'image' || dialogName === 'link' || dialogName === 'flash') {
+                var uploadTab = dialogDefinition.getContents('Upload');
+                if (uploadTab) {
+                    uploadTab.on('show', function() {
+                        var checkInterval = setInterval(function() {
+                            try {
+                                var dialogElement = dialogDefinition.dialog.parts.contents.$;
+                                var iframe = dialogElement.querySelector('iframe');
+                                if (iframe && iframe.contentWindow) {
+                                    try {
+                                        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                        if (iframeDoc && iframeDoc.readyState === 'complete') {
+                                            var form = iframeDoc.querySelector('form');
+                                            if (form) {
+                                                addCsrfTokenToForm(form);
+                                                clearInterval(checkInterval);
+
+                                                // Also watch for form submission
+                                                form.addEventListener('submit', function() {
+                                                    addCsrfTokenToForm(form);
+                                                });
+                                            }
+                                        }
+                                    } catch (e) {
+                                        // Cross-origin or other error, try next time
+                                    }
+                                }
+                            } catch (e) {
+                                clearInterval(checkInterval);
+                            }
+                        }, 50);
+
+                        // Stop checking after 2 seconds
+                        setTimeout(function() {
+                            clearInterval(checkInterval);
+                        }, 2000);
+                    });
+                }
+            }
         });
     </script>
 @endpush

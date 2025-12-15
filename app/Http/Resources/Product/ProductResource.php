@@ -31,6 +31,7 @@ class ProductResource extends JsonResource
             'sku'=>$this->sku,
             'status'=>$this->status,
             'status_label'=>$this->status_label,
+            'content'=>$this->content,
             'category'=> new CategoryResource($this->category),
             'meta'=>$this->meta ? new MetaResource($this->meta) : null,
             'image' => $this->photo ? new FileResource($this->photo) : null,

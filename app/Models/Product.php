@@ -35,6 +35,7 @@ class Product extends Model
         'is_featured',
         'views',
         'specifications',
+        'content',
     ];
 
     protected static array $rules = [
@@ -43,6 +44,7 @@ class Product extends Model
         'name_en' => 'required|string|min:3|max:255',
         'brand' => 'nullable|string|min:3|max:255',
         'specifications' => 'nullable|array',
+        'content' => 'nullable|string|max:200',
         'description' => 'nullable|string|max:10000',
         'category_id' => 'required|exists:categories,id',
         'price' => 'required|numeric|min:0',
